@@ -19,8 +19,6 @@ multidict==4.7.6
 packaging==20.7
 pip==20.2.3
 pipwin==0.5.0
-PyAudio==0.2.11
-PyAutoGUI==0.9.52
 PyGetWindow==0.0.9
 pyjsparser==2.7.1
 pylint==2.6.0
