@@ -18,11 +18,13 @@ class Aid(commands.Cog):
         prefix = self.prx.find_one({"_id": message.guild.id})["prefix"]
         if message.author == self.client.user:
             return
-        if message.content.startswith('!help!'):
+        if message.content.startswith('$help$'):
             await message.delete()
             emb = discord.Embed(description = '**Список команд:** ' + '`{}command`\n'.format(prefix) + '**Help: [Support Server](https://discord.gg/sWHrXQT)\nAdd Opium: [Invite Opium to your Server](https://discord.com/api/oauth2/authorize?client_id=722921602026700861&permissions=8&scope=bot)**')
             emb.set_author(name = f"Префикс на {message.guild.name} =  ' {prefix} '", icon_url = message.guild.icon_url)
             await message.author.send(embed = emb)
+        if message.content.startswith('prefix'):
+            await ctx.send(f'Prefix on {message.guild.name}: `{prefix}`')
 
     #HELP
     @commands.command()
