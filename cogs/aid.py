@@ -34,7 +34,7 @@ class Aid(commands.Cog):
     async def help(self, ctx):
         prefix = self.prx.find_one({"_id": ctx.guild.id})["prefix"]
         await ctx.message.delete()
-        emb = discord.Embed(description = '**Список команд:** ' + '`{}command`\n'.format(prefix) + '**Help: [Support Server](https://discord.gg/sWHrXQT)\nAdd Opium: [Invite Opium to your Server](https://discord.com/api/oauth2/authorize?client_id=722921602026700861&permissions=8&scope=bot)**')
+        emb = discord.Embed(description = '**Список команд:** ' + '`{}commands`\n'.format(prefix) + '**Help: [Support Server](https://discord.gg/sWHrXQT)\nAdd Opium: [Invite Opium to your Server](https://discord.com/api/oauth2/authorize?client_id=722921602026700861&permissions=8&scope=bot)**')
         emb.set_author(name = f"Префикс на {ctx.guild.name} =  ' {prefix} '", icon_url = ctx.guild.icon_url)
         await ctx.author.send(embed = emb)
 
