@@ -166,9 +166,6 @@ class Economy(commands.Cog):
                 self.coll.update_one({"_id": ctx.author.id}, {"$inc": {"cash": 2500}})
                 self.coll.update_one({"_id": 1}, {"$inc": {"cash": -2500}})
                 emb = discord.Embed(title = 'Джекпот 🤩 🥳 🎉',description = f'**Выигрыш: 2500 cc**', color = 0xffa000)
-                emb.set_author(name = ctx.author, icon_url = ctx.author.avatar_url)
-                emb.set_footer(text = f'Баланс • {self.coll.find_one({"_id": ctx.author.id})["cash"]} Cooper Coins')
-                await ctx.send(embed = emb)
                 channel = self.client.get_channel(785551920243671050)
                 com = ', '
                 await channel.send(embed = discord.Embed(description = f"**User {ctx.author.mention} got a jackpot with code number: `{n1}`\nList of his lucky numbers:\n`{com.join(map(str, splist))}`**", color = 0xffa000))
@@ -178,9 +175,9 @@ class Economy(commands.Cog):
                 self.coll.update_one({"_id": ctx.author.id}, {"$inc": {"cash": n}})
                 self.coll.update_one({"_id": 1}, {"$inc": {"cash": -n}})
                 emb = discord.Embed(description = f'**Выигрыш: `{n}` cc**', color = 0x00ff2e)
-                emb.set_author(name = ctx.author, icon_url = ctx.author.avatar_url)
-                emb.set_footer(text = f'Баланс • {self.coll.find_one({"_id": ctx.author.id})["cash"]} Cooper Coins')
-                await ctx.send(embed = emb)
+            emb.set_author(name = ctx.author, icon_url = ctx.author.avatar_url)
+            emb.set_footer(text = f'Баланс • {self.coll.find_one({"_id": ctx.author.id})["cash"]} Cooper Coins')
+            await ctx.send(embed = emb)
 
     #SPIN ERROR
     @spin.error
@@ -191,38 +188,39 @@ class Economy(commands.Cog):
             await ctx.send(embed = discord.Embed(description = '**Ты уже сыграл. Следующая попытка через {:.0f} секунд**'.format(error.retry_after), color = 0xff0000))
 
     #TRUE
-    @commands.command()
-    async def true(self, ctx, amount: int):
+    @commands.command(aliases = ['try', 'true'])
+    async def __true(self, ctx, amount: int):
+        cs = ctx.send
+        de = discord.Embed
         money = self.coll.find_one({"_id": ctx.author.id})["cash"]
-        if not ctx.message.channel.id == 781042512532996116:
-            return
-        elif (money > 10000 and amount > 100):
-            await ctx.send(embed = discord.Embed(title = 'Ошибка ⛔', description = f'**При балансе свыше 10 000 сс сумма не может быть выше 100 сс**', color = 0xff0000))
+        if (money > 10000 and amount > 100):
+            await cs(embed = de(title = 'Ошибка ⛔', description = f'**При балансе свыше 10 000 сс сумма не может быть выше 100 сс**', color = 0xff0000))
         elif amount > 1000:
-            await ctx.send(embed = discord.Embed(title = 'Ошибка ⛔', description = f'**Сумма не может быть выше 1000 сс**', color = 0xff0000))        
+            await cs(embed = de(title = 'Ошибка ⛔', description = f'**Сумма не может быть выше 1000 сс**', color = 0xff0000))        
         elif amount <= 0:
-            await ctx.send(embed = discord.Embed(description = f'**{ctx.author.mention}, введены некорректные данные**', color = 0xff0000))
+            await cs(embed = de(description = f'**{ctx.author.mention}, введены некорректные данные**', color = 0xff0000))
         elif amount > money:
-            await ctx.send(embed = discord.Embed(description = f'**{ctx.author.mention}, y вас недостаточно Cooper Coins!**', color = 0xff0000))
+            await cs(embed = de(description = f'**{ctx.author.mention}, y вас недостаточно Cooper Coins!**', color = 0xff0000))
         else:
             n = randint(1, 20)
             a = [10, 5, 2, 1, 4, 7, 12, 9, 15, 11] 
-            b = [18, 17, 19, 6, 16, 3, 14, 20, 8, 13]  
+            b = [18, 17, 19, 6, 16, 3, 14, 20, 8, 13]
+            self.coll.update_one({"_id": 1}, {"$inc": {"cash": -amount}})
             if n in a:
-                self.coll.update_one({"_id": ctx.author.id}, {"$inc": {"cash": amount}})
-                self.coll.update_one({"_id": 1}, {"$inc": {"cash": -amount}})
-                emb = discord.Embed(description = f'**True 😜, +{amount} Cooper Coins**', color = 0x26cb00)
-                emb.set_author(name = ctx.author, icon_url = ctx.author.avatar_url)
-                emb.set_footer(text = f'Баланс • {self.coll.find_one({"_id": ctx.author.id})["cash"]} Cooper Coins')
-                await ctx.send(embed = emb)
+                win = f'**True 😜, +{amount} Cooper Coins**'
+                clr = 0x26cb00
+                x = amount
             elif n in b:
-                self.coll.update_one({"_id": ctx.author.id}, {"$inc": {"cash": -amount}})
-                emb = discord.Embed(description = f'**False 😭, -{amount} Cooper Coins**', color = 0xd50000)
-                emb.set_author(name = ctx.author, icon_url = ctx.author.avatar_url)
-                emb.set_footer(text = f'Баланс • {self.coll.find_one({"_id": ctx.author.id})["cash"]} Cooper Coins')
-                await ctx.send(embed = emb)
+                win = f'**False 😭, -{amount} Cooper Coins**'
+                clr = 0xd50000
+                x = -amount
             else:
-                return
+                pass
+            self.coll.update_one({"_id": ctx.author.id}, {"$inc": {"cash": x}})
+            emb = de(description = win, color = clr)
+            emb.set_author(name = ctx.author, icon_url = ctx.author.avatar_url)
+            emb.set_footer(text = f'Баланс • {self.coll.find_one({"_id": ctx.author.id})["cash"]} Cooper Coins')
+            await cs(embed = emb)
 
     #SPIN UP
     @commands.command()
