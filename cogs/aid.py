@@ -24,7 +24,7 @@ class Aid(commands.Cog):
             emb.set_author(name = f"Префикс на {message.guild.name} =  ' {prefix} '", icon_url = message.guild.icon_url)
             await message.author.send(embed = emb)
         if message.content.startswith('prefix'):
-            await ctx.send(f'Prefix on {message.guild.name}: `{prefix}`')
+            await message.channel.send(f'**Prefix on {message.guild.name}: `{prefix}`**')
 
     #HELP
     @commands.command()
