@@ -41,7 +41,7 @@ def dev(ctx):
 @client.event
 async def on_ready():
     print('Online')
-    await client.change_presence(activity=discord.Game(name="Выращивание марихуаны"))
+    await client.change_presence(activity=discord.Game(name="$help$"))
 
 @client.command()
 @commands.check(dev)
