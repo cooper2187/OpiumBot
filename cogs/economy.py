@@ -51,7 +51,7 @@ class Economy(commands.Cog):
         user = message.author
         data = self.coll.find_one({"_id": user.id})
         lvl_xp = 8 + 10 * data["lvl"]
-        cash_up = 6 + 6 * data["lvl"]
+        cash_up = 10 + 10 * data["lvl"]
         if data["xp"] < lvl_xp:
             self.coll.update_one({"_id": user.id}, {"$set": {"xp": data["xp"] + 1}})
         if data["xp"] >= lvl_xp:
@@ -153,7 +153,7 @@ class Economy(commands.Cog):
         up(m, {"$set": {"deposit": 0}})
 
     #SPIN
-    @commands.command(aliases = ['спін', 'спин'])
+    @commands.command(aliases = ['спін', 'спин', 'ызшт'])
     @commands.cooldown(1, 3600, commands.BucketType.user)
     async def spin(self, ctx):
         sbonus = self.coll.find_one({"_id": ctx.author.id})["sbonus"]
