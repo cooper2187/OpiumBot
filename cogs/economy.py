@@ -166,7 +166,7 @@ class Economy(commands.Cog):
                 self.coll.update_one({"_id": ctx.author.id}, {"$inc": {"cash": 2500}})
                 self.coll.update_one({"_id": 1}, {"$inc": {"cash": -2500}})
                 emb = discord.Embed(title = 'Джекпот 🤩 🥳 🎉',description = f'**Выигрыш: 2500 cc**', color = 0xffa000)
-                channel = self.client.get_channel(785551920243671050)
+                channel = self.client.get_channel(789806580891123752)
                 com = ', '
                 await channel.send(embed = discord.Embed(description = f"**User {ctx.author.mention} got a jackpot with code number: `{n1}`\nList of his lucky numbers:\n`{com.join(map(str, splist))}`**", color = 0xffa000))
             else:
