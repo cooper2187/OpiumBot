@@ -25,7 +25,7 @@ class Economy(commands.Cog):
     async def on_member_join(self, member):
         post = {
             "_id": member.id,
-            "g_id": m.guild.id,
+            "g_id": member.guild.id,
             "name": f"{member.name}#{member.discriminator}",
             "cash": 10,
             "xp": 0,
@@ -180,12 +180,16 @@ class Economy(commands.Cog):
             await ctx.send(embed = emb)
 
     #SPIN ERROR
-    @spin.error
-    async def spin_error(self, ctx, error):
-        if not ctx.message.channel.id == 781042512532996116:
-            return
+    @spinn.error
+    async def spinn_error(self, ctx, error):
         if isinstance(error, discord.ext.commands.errors.CommandOnCooldown):
-            await ctx.send(embed = discord.Embed(description = '**Ты уже сыграл. Следующая попытка через {:.0f} секунд**'.format(error.retry_after), color = 0xff0000))
+            m = time.strftime("%M", time.gmtime(error.retry_after))
+            s = time.strftime("%S", time.gmtime(error.retry_after))
+            if int(m) < 10:
+                m = m[1:]
+            else:
+                pass
+            await ctx.send(embed = discord.Embed(description = '**Ты уже сыграл. Следующая попытка через {} мин. {} сек.**'.format(m, s), color = 0xff0000))
 
     #TRUE
     @commands.command(aliases = ['try', 'true'])
