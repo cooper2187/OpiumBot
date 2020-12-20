@@ -180,8 +180,8 @@ class Economy(commands.Cog):
             await ctx.send(embed = emb)
 
     #SPIN ERROR
-    @spinn.error
-    async def spinn_error(self, ctx, error):
+    @spin.error
+    async def spin_error(self, ctx, error):
         if isinstance(error, discord.ext.commands.errors.CommandOnCooldown):
             m = time.strftime("%M", time.gmtime(error.retry_after))
             s = time.strftime("%S", time.gmtime(error.retry_after))
