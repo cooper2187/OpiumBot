@@ -51,11 +51,11 @@ class Dick(commands.Cog):
     async def set_lang(self, ctx, lang = None):
         prefix = self.prx.find_one({"_id": ctx.guild.id})["prefix"]
         if lang is None:
-            await ctx.send(embed = discord.Embed(description = f'**{prefix}set_lang [rus/ukr/eng]** - Установить язык(Русский/Украинский/Английский)\n**{prefix}set_lang rus**', color = 0x667676))
+            await ctx.send(embed = discord.Embed(description = f'**{prefix}set_lang [rus/ukr]** - Установить язык(Русский/Украинский)\n**{prefix}set_lang rus**', color = 0x667676))
         elif lang == "rus":
             self.game.update_one({"guild_id": ctx.guild.id}, {"$set": {"lang": "Rus"}})
-        elif lang == "urk":
-            self.game.update_one({"guild_id": ctx.guild.id}, {"$set": {"lang": "Urk"}})
+        elif lang == "ukr":
+            self.game.update_one({"guild_id": ctx.guild.id}, {"$set": {"lang": "Ukr"}})
         else:
             await ctx.send(embed = discord.Embed(description = f'**{prefix}set_lang [rus/ukr]** - Установить язык(Русский/Украинский)\n**{prefix}set_lang rus**', color = 0x667676))    
 
