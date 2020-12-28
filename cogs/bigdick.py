@@ -75,7 +75,7 @@ class Dick(commands.Cog):
         if self.game.count_documents({"guild_id": ctx.guild.id, "user_id": ctx.author.id}) == 0:
             self.game.insert_one(new)
             if lang == "Rus":
-                await ctx.send(embed = discord.Embed(description = f'**{ctx.author.mention}, ты зарегистрировался в игре "Самый длинный песюн!"**', color = 0x0073fe))
+                await ctx.send(embed = discord.Embed(description = f'**{ctx.author.mention}, ты зарегистрировался в игре "Самый длинный пэсюн!"**', color = 0x0073fe))
             else:
                 await ctx.send(embed = discord.Embed(description = f'**{ctx.author.mention}, ти зареєструвався у грі "Найдовший песюн!"**', color = 0x0073fe))
         data = self.game.find_one({"guild_id": ctx.guild.id, "user_id": ctx.author.id})
@@ -108,7 +108,7 @@ class Dick(commands.Cog):
                 if lang == "Ukr":
                     e = discord.Embed(description = f'**Твій песюн виріс на {lplus} см. 😎\nТепер його довжина: {self.game.find_one({"guild_id": ctx.guild.id, "user_id": ctx.author.id})["len"]} см.\nПродовжуй грати через {tt}**', timestamp = ctx.message.created_at, color = 0x26cb00)
                 else:
-                    e = discord.Embed(description = f'**Твой песюн вырос на {lplus} см. 😎\nТеперь его длина: {self.game.find_one({"guild_id": ctx.guild.id, "user_id": ctx.author.id})["len"]} см.\nПродолжай играть через {tt}**', timestamp = ctx.message.created_at, color = 0x26cb00) 
+                    e = discord.Embed(description = f'**Твой пэсюн вырос на {lplus} см. 😎\nТеперь его длина: {self.game.find_one({"guild_id": ctx.guild.id, "user_id": ctx.author.id})["len"]} см.\nПродолжай играть через {tt}**', timestamp = ctx.message.created_at, color = 0x26cb00) 
                 e.set_author(name = ctx.author, icon_url = ctx.author.avatar_url)
                 await ctx.send(embed = e)
                 self.game.update_one({"guild_id": ctx.guild.id, "user_id": ctx.author.id}, {"$set": {"status": 1}})
@@ -117,7 +117,7 @@ class Dick(commands.Cog):
                     if lang == "Ukr":
                         e = discord.Embed(description = f'**В тебе немає песюна. 😧\nПродовжуй грати через {tt}**', timestamp = ctx.message.created_at, color = 0xffa000)
                     else:
-                        e = discord.Embed(description = f'**У тебя нету песюна. 😧\nПродолжай играть через {tt}**', timestamp = ctx.message.created_at, color = 0xffa000)
+                        e = discord.Embed(description = f'**У тебя нету пэсюна. 😧\nПродолжай играть через {tt}**', timestamp = ctx.message.created_at, color = 0xffa000)
                     e.set_author(name = ctx.author, icon_url = ctx.author.avatar_url)
                     await ctx.send(embed = e)
                     self.game.update_one({"guild_id": ctx.guild.id, "user_id": ctx.author.id}, {"$set": {"status": 1}})
@@ -126,7 +126,7 @@ class Dick(commands.Cog):
                     if lang == "Ukr":
                         e = discord.Embed(description = f'**Твій песюн виріс на 1 см. 😎\nТепер його довжина: {self.game.find_one({"guild_id": ctx.guild.id, "user_id": ctx.author.id})["len"]} см.\nПродовжуй грати через {tt}**', timestamp = ctx.message.created_at, color = 0x26cb00)
                     else:
-                        e = discord.Embed(description = f'**Твой песюн вырос на 1 см. 😎\nТеперь его длина: {self.game.find_one({"guild_id": ctx.guild.id, "user_id": ctx.author.id})["len"]} см.\nПродолжай играть через {tt}**', timestamp = ctx.message.created_at, color = 0x26cb00)
+                        e = discord.Embed(description = f'**Твой пэсюн вырос на 1 см. 😎\nТеперь его длина: {self.game.find_one({"guild_id": ctx.guild.id, "user_id": ctx.author.id})["len"]} см.\nПродолжай играть через {tt}**', timestamp = ctx.message.created_at, color = 0x26cb00)
                     e.set_author(name = ctx.author, icon_url = ctx.author.avatar_url)
                     await ctx.send(embed = e)
                     self.game.update_one({"guild_id": ctx.guild.id, "user_id": ctx.author.id}, {"$set": {"status": 1}})
@@ -135,7 +135,7 @@ class Dick(commands.Cog):
                     if lang == "Ukr":
                         e = discord.Embed(description = f'**Твій песюн скоротився на {-lminus} см. 🤣\nТепер його довжина: {self.game.find_one({"guild_id": ctx.guild.id, "user_id": ctx.author.id})["len"]} см.\nПродовжуй грати через {tt}**', timestamp = ctx.message.created_at, color = 0xff1c00)
                     else:
-                        e = discord.Embed(description = f'**Твой песюн уменьшился на {-lminus} см. 🤣\nТеперь его длина: {self.game.find_one({"guild_id": ctx.guild.id, "user_id": ctx.author.id})["len"]} см.\nПродолжай играть через {tt}**', timestamp = ctx.message.created_at, color = 0x26cb00)
+                        e = discord.Embed(description = f'**Твой пэсюн уменьшился на {-lminus} см. 🤣\nТеперь его длина: {self.game.find_one({"guild_id": ctx.guild.id, "user_id": ctx.author.id})["len"]} см.\nПродолжай играть через {tt}**', timestamp = ctx.message.created_at, color = 0x26cb00)
                     e.set_author(name = ctx.author, icon_url = ctx.author.avatar_url)
                     await ctx.send(embed = e)
                     self.game.update_one({"guild_id": ctx.guild.id, "user_id": ctx.author.id}, {"$set": {"status": 1}})
@@ -177,7 +177,7 @@ class Dick(commands.Cog):
                 if lang == "Ukr":    
                     leaders.append(f'**🔹 {i}. {member.display_name} — немає песюна**')
                 else:
-                    leaders.append(f'**🔹 {i}. {member.display_name} — нету песюна**')
+                    leaders.append(f'**🔹 {i}. {member.display_name} — нету пэсюна**')
             else:
                 leaders.append(f'**🔹 {i}. {member.display_name} — {t["len"]} см**')
             i = i + 1
@@ -188,7 +188,7 @@ class Dick(commands.Cog):
                 await ctx.send(embed = discord.Embed(description = f'**Никто не играет...**', color = 0x667676))
         else:
             e = discord.Embed(description = "\n".join(leaders), color = 0x32aafd, timestamp = ctx.message.created_at)
-            e.set_author(name = f'{ctx.guild.name}| Leaderboard', icon_url = ctx.guild.icon_url)
+            e.set_author(name = f'{ctx.guild.name} | Leaderboard', icon_url = ctx.guild.icon_url)
             e.set_footer(text = 'Opium Team', icon_url = 'https://cdn.discordapp.com/avatars/722921602026700861/654ff8c616269acc148f204c17670aaa.webp?size=1024')
             await ctx.send(embed = e)
 
