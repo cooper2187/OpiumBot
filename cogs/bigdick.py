@@ -52,12 +52,12 @@ class Dick(commands.Cog):
     async def set_lang(self, ctx, lang = None):
         prefix = self.prx.find_one({"_id": ctx.guild.id})["prefix"]
         if lang is None:
-            await ctx.send(embed = discord.Embed(description = f'**{prefix}set_lang [rus/ukr/eng]** - Установить язык(Русский/Украинский/Английский)\n**{prefix}set_lang rus**', color = 0x667676))
+            await ctx.send(embed = discord.Embed(description = f'**{prefix}set_lang [rus/ukr]** - Установить язык(Русский/Украинский)\n**{prefix}set_lang rus**', color = 0x667676))
         elif lang == "rus":
             self.game.update_one({"guild_id": ctx.guild.id}, {"$set": {"lang": "Rus"}})
             await ctx.send(embed = discord.Embed(description = "**Language for Big-Dick-Game was changed: Russian**", color = 0x8eac60))
         elif lang == "ukr":
-            self.game.update_one({"guild_id": ctx.guild.id}, {"$set": {"lang": "Urk"}})
+            self.game.update_one({"guild_id": ctx.guild.id}, {"$set": {"lang": "Ukr"}})
             await ctx.send(embed = discord.Embed(description = f"**Language for Big-Dick-Game was changed: Ukrainian**", color = 0x8eac60))
         else:
             await ctx.send(embed = discord.Embed(description = f'**{prefix}set_lang [rus/ukr]** - Установить язык(Русский/Украинский)\n**{prefix}set_lang rus**', color = 0x667676))     
