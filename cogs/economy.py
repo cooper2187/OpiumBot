@@ -366,7 +366,7 @@ class Economy(commands.Cog):
 
     #TOP COOPER COINS\LVL
     @commands.command()
-    async def top(self, ctx, name = None):
+    async def topplayers(self, ctx, name = None):
         prefix = self.prx.find_one({"_id": ctx.guild.id})["prefix"]
         if name == 'cc':
             top = self.coll.find().sort("cash", -1).limit(6).skip(2)
@@ -387,9 +387,9 @@ class Economy(commands.Cog):
             emb.set_footer(text = 'Opium Team', icon_url = 'https://cdn.discordapp.com/avatars/722921602026700861/654ff8c616269acc148f204c17670aaa.webp?size=1024')
             await ctx.send(embed = emb)
         elif name is None:
-            await ctx.send(embed = discord.Embed(description = f'**{prefix}top cc - Leaderboard (Balance)\n{prefix}top lvl - Leaderboard (Lvl)**', color = 0x667676))
+            await ctx.send(embed = discord.Embed(description = f'**{prefix}topplayers cc - Leaderboard (Balance)\n{prefix}topplayers lvl - Leaderboard (Lvl)**', color = 0x667676))
         else:
-            await ctx.send(embed = discord.Embed(description = f'**{prefix}top cc - Leaderboard (Balance)\n{prefix}top lvl - Leaderboard (Lvl)**', color = 0x667676))
+            await ctx.send(embed = discord.Embed(description = f'**{prefix}topplayers cc - Leaderboard (Balance)\n{prefix}topplayers lvl - Leaderboard (Lvl)**', color = 0x667676))
 
     #UP INFO            
     @commands.command()
