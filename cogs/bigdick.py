@@ -16,6 +16,7 @@ class Dick(commands.Cog):
         self.game = self.cluster.opiumdb.dsdickcoll
         self.prx = self.cluster.opiumdb.prefixcoll
 
+    #ON MEMBER JOIN
     @commands.Cog.listener()
     async def on_member_join(self, member):
         if not self.game.count_documents({"guild_id": member.guild.id, "user_id": member.id}) == 0:
@@ -23,6 +24,7 @@ class Dick(commands.Cog):
         else:
             pass
 
+    #ON MEMBER REMOVE
     @commands.Cog.listener()
     async def on_member_remove(self, member):
         if not self.game.count_documents({"guild_id": member.guild.id, "user_id": member.id}) == 0:
@@ -30,7 +32,7 @@ class Dick(commands.Cog):
         else:
             pass
 
-
+    #ON GUILD JOIN
     @commands.Cog.listener()
     async def on_guild_join(self, guild):
         ch = {
@@ -41,11 +43,12 @@ class Dick(commands.Cog):
         if self.game.count_documents({"guild_id": guild.id}) == 0:
             self.game.insert_one(ch)
 
+    #SET CHANNEL
     @commands.command()
     async def set_channel(self, ctx, channel: discord.TextChannel):
         self.game.update_one({"guild_id": ctx.guild.id}, {"$set": {"channel_id": channel.id}})
 
-
+    #DICK
     @commands.command()
     async def dick(self, ctx):
         if not ctx.channel.id == self.game.find_one({"guild_id": ctx.guild.id})["channel_id"]:
@@ -63,7 +66,7 @@ class Dick(commands.Cog):
             await ctx.send(embed = discord.Embed(description = f'**{ctx.author.mention}, ти зареєструвався у грі "Найдовший песюн!"**', color = 0x0073fe))
         data = self.game.find_one({"guild_id": ctx.guild.id, "user_id": ctx.author.id})
         delta = datetime.timedelta(hours=2, minutes=0)
-        now = datetime.datetime.now() + delta - delta
+        now = datetime.datetime.now() + delta
         date = datetime.datetime(1990,1,1, hour=0, minute=0, second=0)
         d = date - now
         hr = time.strftime("%H", time.gmtime(d.seconds))
@@ -109,7 +112,7 @@ class Dick(commands.Cog):
         else:
             await ctx.send(embed = discord.Embed(description = f'**{ctx.author.mention}, ти сьогодні вже грав!**', color = 0xff0000))
 
-
+    #UNDICK
     @commands.command()
     async def undick(self, ctx):
         if not ctx.channel.id == self.game.find_one({"guild_id": ctx.guild.id})["channel_id"]:
@@ -117,7 +120,7 @@ class Dick(commands.Cog):
         self.game.update_one({"guild_id": ctx.guild.id, "user_id": ctx.author.id}, {"$set": {"in_game": 1}})
         await ctx.send(embed = discord.Embed(description = f"**{ctx.author.mention}, ти вийшов з гри!**", color = 0x0073fe))
 
-
+    #TOP PLAYERS
     @commands.command()
     async def top(self, ctx, count: int = None):
         if not ctx.channel.id == self.game.find_one({"guild_id": ctx.guild.id})["channel_id"]:
