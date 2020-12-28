@@ -133,10 +133,10 @@ class Dick(commands.Cog):
         leaders = []
         i = 1
         for t in top:
+            member = self.client.get_guild(ctx.guild.id).get_member(t['user_id'])
             if t['len'] == 0:
-                leaders.append(f'**🔹 {i}. <@{t["user_id"]}> — немає песюна**')
+                leaders.append(f'**🔹 {i}. {member.display_name} — немає песюна**')
             else:
-                member = self.client.get_guild(ctx.guild.id).get_member(t['user_id'])
                 leaders.append(f'**🔹 {i}. {member.display_name} — {t["len"]} см**')
             i = i + 1
         if len(leaders) <= 0:
