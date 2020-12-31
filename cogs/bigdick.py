@@ -37,15 +37,19 @@ class Dick(commands.Cog):
             "guild_id": guild.id,
             "guild_name": guild.name,
             "channel_id": 0,
-            "lang": "Rus"
+            "lang": "Ukr"
         }
         if self.game.count_documents({"guild_id": guild.id}) == 0:
             self.game.insert_one(ch)
 
     @commands.command()
-    async def set_channel(self, ctx, channel: discord.TextChannel):
-        self.game.update_one({"guild_id": ctx.guild.id}, {"$set": {"channel_id": channel.id}})
-        await ctx.send(embed = discord.Embed(description = f"**Channel for Big-Dick-Game was changed: {channel.name}**", color = 0x8eac60))
+    async def set_channel(self, ctx, channel: discord.TextChannel = None):
+        prefix = self.prx.find_one({"_id": ctx.guild.id})["prefix"]
+        if channel is None:
+            await ctx.send(embed = discord.Embed(description = f'**{prefix}set_channel [#TextChannel]** - Установить канал для игры\n**{prefix}set_channel #TextChannelName**', color = 0x667676))
+        else:
+            self.game.update_one({"guild_id": ctx.guild.id}, {"$set": {"channel_id": channel.id}})
+            await ctx.send(embed = discord.Embed(description = f"**Channel for Big-Dick-Game was changed: {channel.name}**", color = 0x8eac60))
 
 
     @commands.command()
