@@ -48,6 +48,8 @@ class Economy(commands.Cog):
     async def on_message(self, message):
         if message.author.bot:
             return
+        if not message.guild.id == 722190594268725288:
+            return
         user = message.author
         data = self.coll.find_one({"_id": user.id})
         lvl_xp = 8 + 10 * data["lvl"]
