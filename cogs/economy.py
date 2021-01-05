@@ -374,7 +374,7 @@ class Economy(commands.Cog):
             top = self.coll.find().sort("cash", -1).limit(6).skip(2)
             leaders = []
             for t in top:
-                member = client.get_guild(ctx.guild.id).get_member(t["_id"])
+                member = self.client.get_guild(ctx.guild.id).get_member(t["_id"])
                 leaders.append(f"{member.mention}: {t['cash']}")
             emb = discord.Embed(description = f"**1. {leaders[0]} Cooper Coins\n\n2. {leaders[1]} Cooper Coins\n\n3. {leaders[2]} Cooper Coins\n\n4. {leaders[3]} Cooper Coins\n\n5. {leaders[4]} Cooper Coins**", color = 0x32aafd, timestamp = ctx.message.created_at)
             emb.set_author(name = f'{ctx.guild.name} | Leaderboard (Balance)', icon_url = ctx.guild.icon_url)
@@ -384,7 +384,7 @@ class Economy(commands.Cog):
             top = self.coll.find().sort("lvl", -1).limit(6).skip(1)
             leaders = []
             for t in top:
-                member = client.get_guild(ctx.guild.id).get_member(t["_id"])
+                member = self.client.get_guild(ctx.guild.id).get_member(t["_id"])
                 leaders.append(f"{member.mention}: {t['lvl']}")
             emb = discord.Embed(description = f"**1. {leaders[0]} уровень\n\n2. {leaders[1]} уровень\n\n3. {leaders[2]} уровень\n\n4. {leaders[3]} уровень\n\n5. {leaders[4]} уровень**", color = 0x32aafd, timestamp = ctx.message.created_at)
             emb.set_author(name = f'{ctx.guild.name} | Leaderboard (Lvl)', icon_url = ctx.guild.icon_url)
