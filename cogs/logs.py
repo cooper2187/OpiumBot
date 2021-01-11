@@ -1,7 +1,6 @@
 import discord
 from discord.ext import commands
 import datetime
-import locale
 import pytz
 
 class Logs(commands.Cog):
@@ -52,9 +51,6 @@ class Logs(commands.Cog):
             elif message.author.bot:
                 return
             else:
-                export LC_ALL="ru_RU.UTF-8"
-                sudo dpkg-reconfigure locales
-                locale.setlocale(locale.LC_ALL, "ru_RU")
                 time = datetime.datetime.now(pytz.timezone('Europe/Moscow')).strftime("%A, %d %b. %Y г., %H:%M:%S")
                 e = discord.Embed(title = f'{message.guild.name} | Сообщение удалено ✉️❌', description = f'**Отправитель: {message.author.mention}. Канал: {message.channel.mention}\nСообщение:** {message.content}')
                 e.set_footer(text = f'{time}', icon_url = message.author.avatar_url)
