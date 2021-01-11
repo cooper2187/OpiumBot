@@ -51,7 +51,7 @@ class Logs(commands.Cog):
             elif message.author.bot:
                 return
             else:
-                time = datetime.datetime.now(pytz.timezone('Europe/Moscow')).strftime("%A, %d %b. %Y г., %H:%M:%S")
+                time = datetime.datetime.now(pytz.timezone('Europe/Moscow')).strftime("%A, %d %B %Y, %H:%M:%S")
                 e = discord.Embed(title = f'{message.guild.name} | Сообщение удалено ✉️❌', description = f'**Отправитель: {message.author.mention}. Канал: {message.channel.mention}\nСообщение:** {message.content}')
                 e.set_footer(text = f'{time}', icon_url = message.author.avatar_url)
                 await logchannel.send(embed = e)
