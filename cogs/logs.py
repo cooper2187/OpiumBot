@@ -21,7 +21,7 @@ class Logs(commands.Cog):
     @commands.Cog.listener()
     async def on_message_edit(self, before, after):
         try:
-            logchannel = self.client.get_channel(779797774580973648)
+            logchannel = self.client.get_channel(798248355888496642)
             if not before.guild.id == 722190594268725288:
                 return
             elif before.channel == logchannel:
@@ -42,7 +42,7 @@ class Logs(commands.Cog):
     @commands.Cog.listener()
     async def on_message_delete(self, message):
         try:
-            logchannel = self.client.get_channel(779797774580973648)
+            logchannel = self.client.get_channel(798248355888496642)
             if not message.guild.id == 722190594268725288:
                 return
             elif message.channel == logchannel:
@@ -68,8 +68,6 @@ class Logs(commands.Cog):
     #ON MEMBER JOIN
     @commands.Cog.listener()
     async def on_member_join(self, member):
-        if member.id == 701462359809589378:
-            await member.kick(reason = 'This user in Black List')
         channel = member.guild.system_channel
         emb = discord.Embed(title = '☑️⠀Новый пользователь', color = 0x951fad, description = f'\n\n**{member}** присоединился(-ась) к серверу!')
         emb.set_thumbnail(url = member.avatar_url)
