@@ -50,7 +50,7 @@ class Logs(commands.Cog):
             elif message.author.bot:
                 return
             async for event in message.guild.audit_logs(limit = 1, action = discord.AuditLogAction.message_delete):
-                if getattr(event.target, "id", None) != message.id:
+                if getattr(event.target, "id", None) == message.id:
                     e = discord.Embed(description = f'**Отправитель: {message.author.mention}. Канал: {message.channel.mention}\nСообщение:** {message.content}')
                     e.set_author(name = f'{message.guild.name} | Сообщение удалено ✉️❌', icon_url = message.author.avatar_url)
                     e.set_footer(text = f'Message ID: {message.id} •  Delete by: {event.user.display_name}', icon_url = event.user.avatar_url)
