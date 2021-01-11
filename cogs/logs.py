@@ -9,7 +9,7 @@ class Logs(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    locale.setlocale(locale.LC_ALL, "ru")
+    self.locale.setlocale(locale.LC_ALL, "ru")
         
     #ON MEMBER UPDATE
     @commands.Cog.listener()
