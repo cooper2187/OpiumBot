@@ -50,11 +50,10 @@ class Logs(commands.Cog):
             elif message.author.bot:
                 return
             else:
-                return
-            time = datetime.datetime.now().strftime("%H:%M:%S, %d.%m.%Y")
-            e = discord.Embed(title = f'{message.guild.name} | Сообщение удалено ✉️❌', description = f'**Отправитель: {message.author.mention}. Канал: {message.channel.mention}\nСообщение:** {message.content}')
-            e.set_footer(text = f'Message ID: {message.id} • {time}', icon_url = message.author.avatar_url)
-            await logchannel.send(embed = e)
+                time = datetime.datetime.now().strftime("%H:%M:%S, %d.%m.%Y")
+                e = discord.Embed(title = f'{message.guild.name} | Сообщение удалено ✉️❌', description = f'**Отправитель: {message.author.mention}. Канал: {message.channel.mention}\nСообщение:** {message.content}')
+                e.set_footer(text = f'Message ID: {message.id} • {time}', icon_url = message.author.avatar_url)
+                await logchannel.send(embed = e)
         except AttributeError:
             pass
             
