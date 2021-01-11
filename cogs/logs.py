@@ -4,13 +4,13 @@ import datetime
 import locale
 import pytz
 
-locale.setlocale(locale.LC_ALL, "ru")
-
 class Logs(commands.Cog):
 
     def __init__(self, client):
         self.client = client
 
+    locale.setlocale(locale.LC_ALL, "ru")
+        
     #ON MEMBER UPDATE
     @commands.Cog.listener()
     async def on_member_update(self, before, after):
