@@ -4,6 +4,8 @@ import datetime
 import locale
 import pytz
 
+locale.setlocale(locale.LC_ALL, "ru")
+
 class Logs(commands.Cog):
 
     def __init__(self, client):
@@ -44,7 +46,6 @@ class Logs(commands.Cog):
     @commands.Cog.listener()
     async def on_message_delete(self, message):
         try:
-            locale.setlocale(locale.LC_ALL, "ru")
             logchannel = self.client.get_channel(798248355888496642)
             if not message.guild.id == 722190594268725288:
                 return
