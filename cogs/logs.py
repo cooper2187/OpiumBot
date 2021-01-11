@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands
-import os
+import datetime
 
 class Logs(commands.Cog):
 
@@ -49,19 +49,12 @@ class Logs(commands.Cog):
                 return
             elif message.author.bot:
                 return
-            async for event in message.guild.audit_logs(limit = 1, action = discord.AuditLogAction.message_delete):
-                if getattr(event.target, "id", None) == message.id:
-                    e = discord.Embed(description = f'**Отправитель: {message.author.mention}. Канал: {message.channel.mention}\nСообщение:** {message.content}')
-                    e.set_author(name = f'{message.guild.name} | Сообщение удалено ✉️❌', icon_url = message.author.avatar_url)
-                    e.set_footer(text = f'Message ID: {message.id} •  Delete by: {event.user.display_name}', icon_url = event.user.avatar_url)
-                    await logchannel.send(embed = e)
-                else:
-                    e = discord.Embed(description = f'**Отправитель: {message.author.mention}. Канал: {message.channel.mention}\nСообщение:** {message.content}')
-                    e.set_author(name = f'{message.guild.name} | Сообщение удалено ✉️❌', icon_url = message.author.avatar_url)
-                    e.set_footer(text = f'Message ID: {message.id} •  Delete by: {message.author.display_name}', icon_url = message.author.avatar_url)
-                    await logchannel.send(embed = e)
             else:
                 return
+            time = datetime.datetime.now().strftime("%H:%M:%S, %d.%m.%Y")
+            e = discord.Embed(title = f'{message.guild.name} | Сообщение удалено ✉️❌', description = f'**Отправитель: {message.author.mention}. Канал: {message.channel.mention}\nСообщение:** {message.content}')
+            e.set_footer(text = f'Message ID: {message.id} • {time}', icon_url = message.author.avatar_url)
+            await logchannel.send(embed = e)
         except AttributeError:
             pass
             
