@@ -99,8 +99,8 @@ class Dick(commands.Cog):
         n = randint(1, 20)
         lplus = randint(1, 10)
         lminus = randint(-5, -1)
-        a = [18, 5, 2, 1, 4, 7, 12, 9, 15, 11, 8, 17, 3] 
-        b = [10, 13, 19, 6, 16, 14, 20]
+        a = [18, 5, 6, 3, 4, 7, 12, 9, 15, 11] 
+        b = [10, 13, 19, 2, 16, 14, 20, 8, 17, 1]
         if data["in_game"] == 0:
             pass
         else:
