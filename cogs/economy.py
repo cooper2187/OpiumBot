@@ -231,6 +231,7 @@ class Economy(commands.Cog):
     #TRY ERROR
     @__true.error
     async def __true_error(self, ctx, error):
+        prefix = self.prx.find_one({"_id": ctx.guild.id})["prefix"]
         if isinstance(error, discord.ext.commands.errors.MissingRequiredArgument):
             await ctx.send(embed = discord.Embed(title = f'Команда: {prefix}try', description = '**Псевдонимы**: {}true, {}false\n**Описание**: Удвоить сумму. Шанс 50%\n**Перезарядка**: 1 секунда\n**Использование**:\n{}true [сумма]\n{}try [сумма]\n{}false [сумма]\n**Пример**:\n{}true 15\n{}try 25\n{}false 50'.format(prefix, prefix, prefix, prefix, prefix, prefix, prefix, prefix), color = discord.Colour.dark_gray()))
 
