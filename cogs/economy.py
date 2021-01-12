@@ -193,8 +193,8 @@ class Economy(commands.Cog):
                 pass
             await ctx.send(embed = discord.Embed(description = '**Ты уже сыграл. Следующая попытка через {} мин. {} сек.**'.format(m, s), color = 0xff0000))
 
-    #TRUE
-    @commands.command(aliases = ['try', 'true'])
+    #TRY
+    @commands.command(aliases = ['try', 'true', 'false'])
     async def __true(self, ctx, amount: int):
         cs = ctx.send
         de = discord.Embed
@@ -213,11 +213,11 @@ class Economy(commands.Cog):
             b = [18, 17, 19, 6, 16, 3, 14, 20, 8, 13]
             self.coll.update_one({"_id": 1}, {"$inc": {"cash": -amount}})
             if n in a:
-                win = f'**True 😜, +{amount} Cooper Coins**'
+                win = f'**Win 😜, +{amount} Cooper Coins**'
                 clr = 0x26cb00
                 x = amount
             elif n in b:
-                win = f'**False 😭, -{amount} Cooper Coins**'
+                win = f'**Lose 😭, -{amount} Cooper Coins**'
                 clr = 0xd50000
                 x = -amount
             else:
@@ -228,6 +228,12 @@ class Economy(commands.Cog):
             emb.set_footer(text = f'Баланс • {self.coll.find_one({"_id": ctx.author.id})["cash"]} Cooper Coins')
             await cs(embed = emb)
 
+    #TRY ERROR
+    @__true.error
+    async def __true_error(self, ctx, error):
+        if isinstance(error, discord.ext.commands.errors.MissingRequiredArgument):
+        await ctx.send(embed = discord.Embed(title = f'Команда: {prefix}try', description = '**Псевдонимы**: {}true, {}false\n**Описание**: Удвоить сумму. Шанс 50%\n**Перезарядка**: 1 секунда\n**Использование**:\n{}true [сумма]\n{}try [сумма]\n{}false [сумма]\n**Пример**:\n{}true 15\n{}try 25\n{}false 50'.format(prefix, prefix, prefix, prefix, prefix, prefix, prefix, prefix), color = discord.Colour.dark_gray()))
+                           
     #SPIN UP
     @commands.command()
     async def spin_up(self, ctx, count: int = None):
