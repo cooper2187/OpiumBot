@@ -82,9 +82,9 @@ class Dick(commands.Cog):
         if self.game.count_documents({"guild_id": ctx.guild.id, "user_id": ctx.author.id}) == 0:
             self.game.insert_one(new)
             if lang == "Rus":
-                await ctx.send(embed = discord.Embed(description = f'**{ctx.author.mention}, ты зарегистрировался в игре "Самый длинный пэсюн!"**', color = 0x0073fe))
+                await ctx.send(embed = discord.Embed(description = f'**🔰 {ctx.author.mention}, ты зарегистрировался в игре "Самый длинный пэсюн!"**', color = 0x0073fe))
             else:
-                await ctx.send(embed = discord.Embed(description = f'**{ctx.author.mention}, ти зареєструвався у грі "Найдовший песюн!"**', color = 0x0073fe))
+                await ctx.send(embed = discord.Embed(description = f'**🔰 {ctx.author.mention}, ти зареєструвався у грі "Найдовший песюн!"**', color = 0x0073fe))
         data = self.game.find_one({"guild_id": ctx.guild.id, "user_id": ctx.author.id})
         delta = datetime.timedelta(hours=2, minutes=0)
         now = datetime.datetime.now() + delta
@@ -105,44 +105,44 @@ class Dick(commands.Cog):
             pass
         else:
             if lang == "Ukr":
-                await ctx.send(embed = discord.Embed(description = f"**{ctx.author.mention}, ти повернувся до гри!**", color = 0x0073fe))
+                await ctx.send(embed = discord.Embed(description = f"**{ctx.author.mention}, ти повернувся до гри! ✅**", color = 0x0073fe))
             else:
-                await ctx.send(embed = discord.Embed(description = f"**{ctx.author.mention}, ты вернулся к игре!**", color = 0x0073fe))
+                await ctx.send(embed = discord.Embed(description = f"**{ctx.author.mention}, ты вернулся к игре! ✅**", color = 0x0073fe))
             self.game.update_one({"guild_id": ctx.guild.id, "user_id": ctx.author.id}, {"$set": {"in_game": 0}})
         if data["status"] == 0:
             if n in a:
                 self.game.update_one({"guild_id": ctx.guild.id, "user_id": ctx.author.id}, {"$inc": {"len": lplus}})
                 if lang == "Ukr":
-                    e = discord.Embed(description = f'**Твій песюн виріс на {lplus} см. 😎\nТепер його довжина: {self.game.find_one({"guild_id": ctx.guild.id, "user_id": ctx.author.id})["len"]} см.\nПродовжуй грати через {tt}**', timestamp = ctx.message.created_at, color = 0x26cb00)
+                    e = discord.Embed(description = f'**📈 Твій песюн виріс на {lplus} см.\n💎 Тепер його довжина: {self.game.find_one({"guild_id": ctx.guild.id, "user_id": ctx.author.id})["len"]} см.\n⌚️ Продовжуй грати через {tt}**', timestamp = ctx.message.created_at, color = 0x26cb00)
                 else:
-                    e = discord.Embed(description = f'**Твой пэсюн вырос на {lplus} см. 😎\nТеперь его длина: {self.game.find_one({"guild_id": ctx.guild.id, "user_id": ctx.author.id})["len"]} см.\nПродолжай играть через {tt}**', timestamp = ctx.message.created_at, color = 0x26cb00) 
+                    e = discord.Embed(description = f'**📈 Твой пэсюн вырос на {lplus} см.\n💎 Теперь его длина: {self.game.find_one({"guild_id": ctx.guild.id, "user_id": ctx.author.id})["len"]} см.\n⌚️ Продолжай играть через {tt}**', timestamp = ctx.message.created_at, color = 0x26cb00) 
                 e.set_author(name = ctx.author, icon_url = ctx.author.avatar_url)
                 await ctx.send(embed = e)
                 self.game.update_one({"guild_id": ctx.guild.id, "user_id": ctx.author.id}, {"$set": {"status": 1}})
             elif n in b:
                 if data['len'] == 0:
                     if lang == "Ukr":
-                        e = discord.Embed(description = f'**В тебе немає песюна. 😧\nПродовжуй грати через {tt}**', timestamp = ctx.message.created_at, color = 0xffa000)
+                        e = discord.Embed(description = f'**😧 В тебе немає песюна.\n⌚️ Продовжуй грати через {tt}**', timestamp = ctx.message.created_at, color = 0xffa000)
                     else:
-                        e = discord.Embed(description = f'**У тебя нету пэсюна. 😧\nПродолжай играть через {tt}**', timestamp = ctx.message.created_at, color = 0xffa000)
+                        e = discord.Embed(description = f'**😧 У тебя нету пэсюна.\n⌚️ Продолжай играть через {tt}**', timestamp = ctx.message.created_at, color = 0xffa000)
                     e.set_author(name = ctx.author, icon_url = ctx.author.avatar_url)
                     await ctx.send(embed = e)
                     self.game.update_one({"guild_id": ctx.guild.id, "user_id": ctx.author.id}, {"$set": {"status": 1}})
                 elif -lminus >= data["len"]:
                     self.game.update_one({"guild_id": ctx.guild.id, "user_id": ctx.author.id}, {"$inc": {"len": 1}})
                     if lang == "Ukr":
-                        e = discord.Embed(description = f'**Твій песюн виріс на 1 см. 😎\nТепер його довжина: {self.game.find_one({"guild_id": ctx.guild.id, "user_id": ctx.author.id})["len"]} см.\nПродовжуй грати через {tt}**', timestamp = ctx.message.created_at, color = 0x26cb00)
+                        e = discord.Embed(description = f'** 📈Твій песюн виріс на 1 см.\n💎 Тепер його довжина: {self.game.find_one({"guild_id": ctx.guild.id, "user_id": ctx.author.id})["len"]} см.\n⌚️ Продовжуй грати через {tt}**', timestamp = ctx.message.created_at, color = 0x26cb00)
                     else:
-                        e = discord.Embed(description = f'**Твой пэсюн вырос на 1 см. 😎\nТеперь его длина: {self.game.find_one({"guild_id": ctx.guild.id, "user_id": ctx.author.id})["len"]} см.\nПродолжай играть через {tt}**', timestamp = ctx.message.created_at, color = 0x26cb00)
+                        e = discord.Embed(description = f'**📈 Твой пэсюн вырос на 1 см.\n💎 Теперь его длина: {self.game.find_one({"guild_id": ctx.guild.id, "user_id": ctx.author.id})["len"]} см.\n⌚️ Продолжай играть через {tt}**', timestamp = ctx.message.created_at, color = 0x26cb00)
                     e.set_author(name = ctx.author, icon_url = ctx.author.avatar_url)
                     await ctx.send(embed = e)
                     self.game.update_one({"guild_id": ctx.guild.id, "user_id": ctx.author.id}, {"$set": {"status": 1}})
                 else:
                     self.game.update_one({"guild_id": ctx.guild.id, "user_id": ctx.author.id}, {"$inc": {"len": lminus}})
                     if lang == "Ukr":
-                        e = discord.Embed(description = f'**Твій песюн скоротився на {-lminus} см. 🤣\nТепер його довжина: {self.game.find_one({"guild_id": ctx.guild.id, "user_id": ctx.author.id})["len"]} см.\nПродовжуй грати через {tt}**', timestamp = ctx.message.created_at, color = 0xff1c00)
+                        e = discord.Embed(description = f'**✂️ Твій песюн скоротився на {-lminus} см.\n💎 Тепер його довжина: {self.game.find_one({"guild_id": ctx.guild.id, "user_id": ctx.author.id})["len"]} см.\n⌚️ Продовжуй грати через {tt}**', timestamp = ctx.message.created_at, color = 0xff1c00)
                     else:
-                        e = discord.Embed(description = f'**Твой пэсюн уменьшился на {-lminus} см. 🤣\nТеперь его длина: {self.game.find_one({"guild_id": ctx.guild.id, "user_id": ctx.author.id})["len"]} см.\nПродолжай играть через {tt}**', timestamp = ctx.message.created_at, color = 0x26cb00)
+                        e = discord.Embed(description = f'**✂️ Твой пэсюн уменьшился на {-lminus} см.\n💎 Теперь его длина: {self.game.find_one({"guild_id": ctx.guild.id, "user_id": ctx.author.id})["len"]} см.\n⌚️ Продолжай играть через {tt}**', timestamp = ctx.message.created_at, color = 0x26cb00)
                     e.set_author(name = ctx.author, icon_url = ctx.author.avatar_url)
                     await ctx.send(embed = e)
                     self.game.update_one({"guild_id": ctx.guild.id, "user_id": ctx.author.id}, {"$set": {"status": 1}})
@@ -150,9 +150,9 @@ class Dick(commands.Cog):
                 return
         else:
             if lang == "Ukr":
-                await ctx.send(embed = discord.Embed(description = f'**{ctx.author.mention}, ти сьогодні вже грав!**', color = 0xff0000))
+                await ctx.send(embed = discord.Embed(description = f'**❌ {ctx.author.mention}, ти сьогодні вже грав!**', color = 0xff0000))
             else:
-                await ctx.send(embed = discord.Embed(description = f'**{ctx.author.mention}, ты сегодня уже играл!**', color = 0xff0000))
+                await ctx.send(embed = discord.Embed(description = f'**❌ {ctx.author.mention}, ты сегодня уже играл!**', color = 0xff0000))
         rolelist = ['Козак', 'Евростандарт', 'Шалун', 'Скромник', 'Брехун']
         memberroles = []
         obsh = []
@@ -163,37 +163,49 @@ class Dick(commands.Cog):
                 if i == j:
                     obsh.append(i)
                     break
-        for n in obsh:
-            rol = discord.utils.get(ctx.guild.roles, name = n)
-            await ctx.author.remove_roles(rol)
         LEN = self.game.find_one({"guild_id": ctx.author.guild.id, "user_id":ctx.author.id})["len"] 
         if LEN >= 500:
             role = discord.utils.get(ctx.guild.roles, id = 798552885822226452)
             if not role in ctx.author.roles:
+                for n in obsh:
+                    rol = discord.utils.get(ctx.guild.roles, name = n)
+                    await ctx.author.remove_roles(rol)
                 await ctx.author.add_roles(role)
             else:
                 return
         elif (LEN >= 400 and LEN < 500):
             role = discord.utils.get(ctx.guild.roles, id = 798552887697211432)
             if not role in ctx.author.roles:
+                for n in obsh:
+                    rol = discord.utils.get(ctx.guild.roles, name = n)
+                    await ctx.author.remove_roles(rol)
                 await ctx.author.add_roles(role)
             else:
                 return
         elif (LEN >= 300 and LEN < 400):
             role = discord.utils.get(ctx.guild.roles, id = 798552889584254976)
             if not role in ctx.author.roles:
+                for n in obsh:
+                    rol = discord.utils.get(ctx.guild.roles, name = n)
+                    await ctx.author.remove_roles(rol)
                 await ctx.author.add_roles(role)
             else:
                 return            
         elif (LEN >= 200 and LEN < 300):
             role = discord.utils.get(ctx.guild.roles, id = 798552891660042270)
             if not role in ctx.author.roles:
+                for n in obsh:
+                    rol = discord.utils.get(ctx.guild.roles, name = n)
+                    await ctx.author.remove_roles(rol)
                 await ctx.author.add_roles(role)
             else:
                 return
         elif (LEN >= 100 and LEN < 200):
             role = discord.utils.get(ctx.guild.roles, id = 798552892059549727)
             if not role in ctx.author.roles:
+                for n in obsh:
+                    rol = discord.utils.get(ctx.guild.roles, name = n)
+                    await ctx.author.remove_roles(rol)
                 await ctx.author.add_roles(role)
             else:
                 return
@@ -208,10 +220,22 @@ class Dick(commands.Cog):
             return
         self.game.update_one({"guild_id": ctx.guild.id, "user_id": ctx.author.id}, {"$set": {"in_game": 1}})
         if lang == "Ukr":
-            await ctx.send(embed = discord.Embed(description = f"**{ctx.author.mention}, ти вийшов з гри!**", color = 0x0073fe))
+            await ctx.send(embed = discord.Embed(description = f"**{ctx.author.mention}, ти вийшов з гри! ✅**", color = 0x0073fe))
         else:
-            await ctx.send(embed = discord.Embed(description = f"**{ctx.author.mention}, ты вышел из игры!**", color = 0x0073fe))
-
+            await ctx.send(embed = discord.Embed(description = f"**{ctx.author.mention}, ты вышел из игры! ✅**", color = 0x0073fe))
+        rolelist = ['Козак', 'Евростандарт', 'Шалун', 'Скромник', 'Брехун']
+        memberroles = []
+        obsh = []
+        for r in ctx.author.roles:
+            memberroles.append(r.name)
+        for i in rolelist:
+            for j in memberroles:
+                if i == j:
+                    obsh.append(i)
+                    break
+        for n in obsh:
+            rol = discord.utils.get(ctx.guild.roles, name = n)
+            await ctx.author.remove_roles(rol)
 
     @commands.command()
     async def top(self, ctx, count: int = None):
