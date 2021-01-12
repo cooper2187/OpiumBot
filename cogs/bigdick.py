@@ -153,7 +153,54 @@ class Dick(commands.Cog):
                 await ctx.send(embed = discord.Embed(description = f'**{ctx.author.mention}, ти сьогодні вже грав!**', color = 0xff0000))
             else:
                 await ctx.send(embed = discord.Embed(description = f'**{ctx.author.mention}, ты сегодня уже играл!**', color = 0xff0000))
+        rolelist = ['Козак', 'Евростандарт', 'Шалун', 'Скромник', 'Брехун']
+        memberroles = []
+        obsh = []
+        for r in ctx.author.roles:
+            memberroles.append(r.name)
+        for i in rolelist:
+            for j in memberroles:
+                if i == j:
+                    obsh.append(i)
+                    break
+        for n in obsh:
+            rol = discord.utils.get(ctx.guild.roles, name = n)
+            await ctx.author.remove_roles(rol)
+        LEN = self.game.find_one({"guild_id": ctx.author.guild.id, "user_id":ctx.author.id})["len"] 
+        if LEN >= 500:
+            role = discord.utils.get(ctx.guild.roles, id = 798552885822226452)
+            if not role in ctx.author.roles:
+                await ctx.author.add_roles(role)
+            else:
+                return
+        elif (LEN >= 400 and LEN < 500):
+            role = discord.utils.get(ctx.guild.roles, id = 798552887697211432)
+            if not role in ctx.author.roles:
+                await ctx.author.add_roles(role)
+            else:
+                return
+        elif (LEN >= 300 and LEN < 400):
+            role = discord.utils.get(ctx.guild.roles, id = 798552889584254976)
+            if not role in ctx.author.roles:
+                await ctx.author.add_roles(role)
+            else:
+                return            
+        elif (LEN >= 200 and LEN < 300):
+            role = discord.utils.get(ctx.guild.roles, id = 798552891660042270)
+            if not role in ctx.author.roles:
+                await ctx.author.add_roles(role)
+            else:
+                return
+        elif (LEN >= 100 and LEN < 200):
+            role = discord.utils.get(ctx.guild.roles, id = 798552892059549727)
+            if not role in ctx.author.roles:
+                await ctx.author.add_roles(role)
+            else:
+                return
+        else:
+            return                                          
 
+                                          
     @commands.command()
     async def undick(self, ctx):
         lang = self.game.find_one({"guild_id": ctx.guild.id})["lang"]
