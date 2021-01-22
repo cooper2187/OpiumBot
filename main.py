@@ -41,7 +41,7 @@ def dev(ctx):
 @client.event
 async def on_ready():
     print('Online')
-    await client.change_presence(activity = Activity(name = "Купера | $help$"), type = ActivityType.listening)
+    await client.change_presence(activity = Activity(name = "Купера | $help$", type = ActivityType.listening))
 
 @client.command()
 @commands.check(dev)
