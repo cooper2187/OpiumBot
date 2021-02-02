@@ -515,7 +515,7 @@ class Economy(commands.Cog):
             await ctx.send(embed = discord.Embed(title = f'Command: {prefix}dep_calc', description = f'**Описание:** Калькулятор депозита\n**Использование:** {prefix}dep_calc <кол-во часов>\n**Пример:** {prefix}dep_cacl 12'))
         elif hours > 720 and ctx.author.id != 382522784841990144:
             await ctx.send(embed = discord.Embed(description = f'**{ctx.author.mention}, не более 120 часов!**', color = 0xff0000))
-        elif (hours <= 0 or summ <= 0):
+        elif hours <= 0:
             await ctx.send(embed = discord.Embed(description = f'**{ctx.author.mention}, введены некорректные данные**', color = 0xff0000))
         else:
             if summ is None:
@@ -529,7 +529,7 @@ class Economy(commands.Cog):
                 i = i + 1
                 dep = round(dep * 1.005)
             sn = s[hours - 1]
-            z = sn - round(self.coll.find_one({"_id": ctx.author.id})["deposit"])
+            z = sn - round(dep)
             await ctx.send(embed = discord.Embed(description = f'**На вашем депозит счёте будет: `{sn} Cooper Coins` (разница `{z} cc`)**', color = 0xcd14d3))
                            
     #OREL
