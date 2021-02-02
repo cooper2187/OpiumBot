@@ -529,7 +529,10 @@ class Economy(commands.Cog):
                 i = i + 1
                 dep = round(dep * 1.005)
             sn = s[hours - 1]
-            z = sn - round(dep)
+            if summ is None:
+                z = sn - round(self.coll.find_one({"_id": ctx.author.id})["deposit"])
+            else:
+                z = sn - summ
             await ctx.send(embed = discord.Embed(description = f'**На вашем депозит счёте будет: `{sn} Cooper Coins` (разница `{z} cc`)**', color = 0xcd14d3))
                            
     #OREL
