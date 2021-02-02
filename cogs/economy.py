@@ -509,16 +509,19 @@ class Economy(commands.Cog):
 
     #DEPOSIT CALCULATOR
     @commands.command()
-    async def dep_calc(self, ctx, hours: int = None):
+    async def dep_calc(self, ctx, hours: int = None, summ: int = None):
         prefix = self.prx.find_one({"_id": ctx.guild.id})["prefix"]
         if hours is None:
             await ctx.send(embed = discord.Embed(title = f'Command: {prefix}dep_calc', description = f'**Описание:** Калькулятор депозита\n**Использование:** {prefix}dep_calc <кол-во часов>\n**Пример:** {prefix}dep_cacl 12'))
-        elif hours > 120 and ctx.author.id != 382522784841990144:
+        elif hours > 720 and ctx.author.id != 382522784841990144:
             await ctx.send(embed = discord.Embed(description = f'**{ctx.author.mention}, не более 120 часов!**', color = 0xff0000))
-        elif hours <= 0:
+        elif (hours <= 0 or summ <= 0):
             await ctx.send(embed = discord.Embed(description = f'**{ctx.author.mention}, введены некорректные данные**', color = 0xff0000))
         else:
-            dep = round(self.coll.find_one({"_id": ctx.author.id})["deposit"])
+            if summ is None:
+                dep = round(self.coll.find_one({"_id": ctx.author.id})["deposit"])
+            else:
+                dep = summ
             s = []
             i = 0
             while i < hours:
