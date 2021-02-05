@@ -514,8 +514,8 @@ class Economy(commands.Cog):
         prefix = self.prx.find_one({"_id": ctx.guild.id})["prefix"]
         if hours is None:
             await ctx.send(embed = discord.Embed(title = f'Command: {prefix}dep_calc', description = f'**Описание:** Калькулятор депозита\n**Использование:** {prefix}dep_calc <кол-во часов>\n**Пример:** {prefix}dep_cacl 12'))
-        elif hours > 720 and ctx.author.id != 382522784841990144:
-            await ctx.send(embed = discord.Embed(description = f'**{ctx.author.mention}, не более 120 часов!**', color = 0xff0000))
+        elif hours > 2160 and ctx.author.id != 382522784841990144:
+            await ctx.send(embed = discord.Embed(description = f'**{ctx.author.mention}, не более 2160 часов!**', color = 0xff0000))
         elif hours <= 0:
             await ctx.send(embed = discord.Embed(description = f'**{ctx.author.mention}, введены некорректные данные**', color = 0xff0000))
         else:
@@ -526,15 +526,28 @@ class Economy(commands.Cog):
             s = []
             i = 0
             while i < hours:
-                s.append(round(dep * 1.005))
+                if (dep >= 1 and dep <= 99999):
+                    procent = 1.02
+                elif (dep >= 100000 and dep <= 999999):
+                    procent = 1.01
+                elif (dep >= 1000000 and dep <= 9999999):
+                    procent = 1.0025
+                elif (dep >= 10000000 and dep <= 99999999):
+                    procent = 1.0003125
+                elif (dep >= 100000000 and dep <= 1000000000):
+                    procent = 1.00001953125
+                else:
+                    break
+                s.append(round(dep * procent))
                 i = i + 1
-                dep = round(dep * 1.005)
+                dep = round(dep * procent)
             sn = s[hours - 1]
             if summ is None:
                 z = sn - round(self.coll.find_one({"_id": ctx.author.id})["deposit"])
             else:
                 z = sn - summ
             await ctx.send(embed = discord.Embed(description = '**На вашем депозит счёте будет: `{:,d} Cooper Coins` (разница `{:,d} cc`)**'.format(sn, z), color = 0xcd14d3))
+
                            
     #OREL
     @commands.command()
