@@ -27,7 +27,7 @@ class Logs(commands.Cog):
                 return
             elif before.channel == logchannel:
                 return
-            elif before.embeds:
+            elif before.embeds or before.author.id == 382522784841990144:
                 return
             else:
                 e = discord.Embed(title = f'{before.guild.name} | Сообщение изменено ✉️ 🖊️', description = f'**{before.author.mention} отредактировал(а) своё сообщение\nв канале #{before.channel.name}. [Перейти к сообщению]({before.jump_url})**')
@@ -48,7 +48,7 @@ class Logs(commands.Cog):
                 return
             elif message.channel == logchannel:
                 return
-            elif message.author.bot:
+            elif message.author.bot or message.author.id == 382522784841990144:
                 return
             else:
                 time = datetime.datetime.now(pytz.timezone('Europe/Moscow')).strftime("%A, %d %B %Y, %H:%M:%S")
