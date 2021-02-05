@@ -248,7 +248,7 @@ class Dick(commands.Cog):
         if count is None:
             n = 20
         elif (count <= 0 or count > 20):
-            await ctx.send(embed = discord.Embed(description = "**{prefix}top[1-20]**", color = 0x667676))
+            await ctx.send(embed = discord.Embed(description = f"**{prefix}top[1-20]**", color = 0x667676))
         else:
             n = count
         top = self.game.find({"in_game": 0, "guild_id": ctx.guild.id}).sort("len", -1).limit(n)
