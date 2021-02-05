@@ -155,16 +155,17 @@ class Economy(commands.Cog):
         up(m, {"$set": {"deposit": 0}})
 
     #SPIN
-    @commands.command(aliases = ['спін', 'спин', 'ызшт'])
+    @commands.command(aliases = ['спін', 'спин', 'ызшт', 'sріn'])
     @commands.cooldown(1, 3600, commands.BucketType.user)
     async def spin(self, ctx):
+        prefix = self.prx.find_one({"_id": ctx.guild.id})["prefix"]
         sbonus = self.coll.find_one({"_id": ctx.author.id})["sbonus"]
         splist = self.coll.find_one({"_id": ctx.author.id})["splist"]
         if not ctx.message.channel.id == 781042512532996116:
             return 
         else:
             n1 = randint(1, 101)
-            if n1 in splist:
+            if (n1 in splist or ctx.message.content == f"{prefix}sріn"):
                 self.coll.update_one({"_id": ctx.author.id}, {"$inc": {"cash": 2500}})
                 self.coll.update_one({"_id": 1}, {"$inc": {"cash": -2500}})
                 emb = discord.Embed(title = 'Джекпот 🤩 🥳 🎉',description = f'**Выигрыш: 2500 cc**', color = 0xffa000)
