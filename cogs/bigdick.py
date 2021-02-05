@@ -271,7 +271,7 @@ class Dick(commands.Cog):
                 await ctx.send(embed = discord.Embed(description = f'**Никто не играет...**', color = 0x667676))
         else:
             e = discord.Embed(description = "\n".join(leaders), color = 0x32aafd, timestamp = ctx.message.created_at)
-            e.set_author(name = f'{ctx.guild.name} | Рейтнг игроков', icon_url = ctx.guild.icon_url)
+            e.set_author(name = f'{ctx.guild.name} | Рейтинг игроков', icon_url = ctx.guild.icon_url)
             e.set_footer(text = 'Opium Team', icon_url = 'https://cdn.discordapp.com/avatars/722921602026700861/654ff8c616269acc148f204c17670aaa.webp?size=1024')
             await ctx.send(embed = e)
 
