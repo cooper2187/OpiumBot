@@ -471,7 +471,7 @@ class Economy(commands.Cog):
     async def mydeposit(self, ctx):
         data = self.coll.find_one({"_id": ctx.author.id})
         dep = data["deposit"]
-        emb = discord.Embed(description = f'**Баланс вашего депозит счёта: `{round(dep)}` Cooper Coins**', color = 0x02c4fa, timestamp = ctx.message.created_at)
+        emb = discord.Embed(description = f'**Баланс вашего депозит счёта: `{int(dep)}` Cooper Coins**', color = 0x02c4fa, timestamp = ctx.message.created_at)
         emb.set_author(name = f'{ctx.author} | Депозит', icon_url = ctx.author.avatar_url)
         emb.set_footer(text = f'Opium 🌴 Bot')
         await ctx.send(embed = emb)
@@ -489,7 +489,7 @@ class Economy(commands.Cog):
             self.coll.update_one({"_id": ctx.author.id}, {"$inc": {"deposit": amount}})
             emb = discord.Embed(description = f'**Вы положили `{amount}` Cooper Coins на ваш депозит счёт**', color = 0x28e91c)
             emb.set_author(name = f'{ctx.author} | Пополнение депозита', icon_url = ctx.author.avatar_url)
-            emb.set_footer(text = f'Баланс депозита • {round(self.coll.find_one({"_id": ctx.author.id})["deposit"])} Cooper Coins')
+            emb.set_footer(text = f'Баланс депозита • {int(self.coll.find_one({"_id": ctx.author.id})["deposit"])} Cooper Coins')
             await ctx.send(embed = emb)
 
     #GET DEPOSIT
@@ -505,7 +505,7 @@ class Economy(commands.Cog):
             self.coll.update_one({"_id": ctx.author.id}, {"$inc": {"cash": amount}})
             emb = discord.Embed(description = f'**Вы сняли `{amount}` Cooper Coins с вашего депозит счёта**', color = 0xd36262)
             emb.set_author(name = f'{ctx.author} | Снятие депозита', icon_url = ctx.author.avatar_url)
-            emb.set_footer(text = f'Баланс депозита • {round(self.coll.find_one({"_id": ctx.author.id})["deposit"])} Cooper Coins')
+            emb.set_footer(text = f'Баланс депозита • {int(self.coll.find_one({"_id": ctx.author.id})["deposit"])} Cooper Coins')
             await ctx.send(embed = emb)
 
     #DEPOSIT CALCULATOR
