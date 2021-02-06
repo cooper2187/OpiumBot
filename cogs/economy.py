@@ -520,7 +520,7 @@ class Economy(commands.Cog):
             await ctx.send(embed = discord.Embed(description = f'**{ctx.author.mention}, введены некорректные данные**', color = 0xff0000))
         else:
             if summ is None:
-                dep = round(self.coll.find_one({"_id": ctx.author.id})["deposit"])
+                dep = int(self.coll.find_one({"_id": ctx.author.id})["deposit"])
             else:
                 dep = summ
             s = []
@@ -538,14 +538,14 @@ class Economy(commands.Cog):
                     procent = 1.00001953125
                 else:
                     break
-                s.append(round(dep * procent))
+                s.append(dep * procent)
                 i = i + 1
-                dep = round(dep * procent)
-            sn = s[hours - 1]
+                dep = dep * procent
+            sn = int(s[hours - 1])
             if summ is None:
-                z = sn - round(self.coll.find_one({"_id": ctx.author.id})["deposit"])
+                z = int(sn - (self.coll.find_one({"_id": ctx.author.id})["deposit"]))
             else:
-                z = sn - summ
+                z = int(sn - summ)
             await ctx.send(embed = discord.Embed(description = '**На вашем депозит счёте будет: `{:,d} Cooper Coins` (разница `{:,d} cc`)**'.format(sn, z), color = 0xcd14d3))
 
                            
