@@ -171,7 +171,11 @@ class Economy(commands.Cog):
                 emb = discord.Embed(title = 'Джекпот 🤩 🥳 🎉',description = f'**Выигрыш: 2500 cc**', color = 0xffa000)
                 channel = self.client.get_channel(789806580891123752)
                 com = ', '
-                await channel.send(embed = discord.Embed(description = f"**User {ctx.author.mention} got a jackpot with code number: `{n1}`\nList of his lucky numbers:\n`{com.join(map(str, splist))}`**", color = 0xffa000))
+                if n1 in splist:
+                    cdn = n1
+                else:
+                    cdn = 82
+                await channel.send(embed = discord.Embed(description = f"**User {ctx.author.mention} got a jackpot with code number: `{cdn}`\nList of his lucky numbers:\n`[{com.join(map(str, splist))}]`**", color = 0xffa000))
             else:
                 msb = round((sbonus - 9) * 0.7)
                 n = randint(msb, sbonus)
