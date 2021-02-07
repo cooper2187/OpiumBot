@@ -530,7 +530,7 @@ class Economy(commands.Cog):
             s = []
             i = 0
             while i < hours:
-                if (dep >= 1 and dep <= 99999): 1024 256
+                if (dep >= 1 and dep <= 99999):
                     procent = 1.02
                 elif (dep >= 100000 and dep <= 999999):
                     procent = 1.005
