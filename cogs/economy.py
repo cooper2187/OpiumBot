@@ -533,15 +533,19 @@ class Economy(commands.Cog):
                 if (dep >= 1 and dep <= 99999):
                     procent = 1.02
                 elif (dep >= 100000 and dep <= 999999):
-                    procent = 1.005
+                    procent = 1.01
                 elif (dep >= 1000000 and dep <= 9999999):
-                    procent = 1.00125
+                    procent = 1.005
                 elif (dep >= 10000000 and dep <= 99999999):
-                    procent = 1.00032
-                elif (dep >= 100000000 and dep <= 500000000):
-                    procent = 1.00008
-                elif (dep >= 500000000 and dep <= 1000000000):
-                    procent = 1.00002
+                    procent = 1.0025
+                elif (dep >= 100000000 and dep <= 1000000000):
+                    procent = 1.000625
+                elif (dep >= 1000000000 and dep <= 10000000000):
+                    procent = 1.00015
+                elif (dep >= 10000000000 and dep <= 100000000000):
+                    procent = 1.00004
+                elif (dep >= 100000000000 and dep <= 1000000000000):
+                    procent = 1.000005
                 else:
                     break
                 s.append(dep * procent)
