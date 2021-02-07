@@ -531,15 +531,15 @@ class Economy(commands.Cog):
             i = 0
             while i < hours:
                 if (dep >= 1 and dep <= 99999):
-                    procent = 1.01
+                    procent = 1.02
                 elif (dep >= 100000 and dep <= 999999):
-                    procent = 1.005
+                    procent = 1.01
                 elif (dep >= 1000000 and dep <= 9999999):
                     procent = 1.0025
                 elif (dep >= 10000000 and dep <= 99999999):
                     procent = 1.00125
                 elif (dep >= 100000000 and dep <= 1000000000):
-                    procent = 1.000625
+                    procent = 1.0003125
                 else:
                     break
                 s.append(dep * procent)
