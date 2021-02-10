@@ -261,11 +261,11 @@ class Economy(commands.Cog):
                 await ctx.send(embed = discord.Embed(description = f'**{ctx.author.mention}, у вас недостаточно Cooper Coins. {cash}/{sprice} cc**', color = 0xff0000))
             else:
                 self.coll.update_one({"_id": ctx.author.id}, {"$inc": {"cash": -sprice}})
-                emb = discord.Embed(title = f'Повышение навыка x1 🔼 (-{sprice} cc)', description  = f'**💿 Рулетка(макс. выигрыш): `{sbonus}` -> `{sbonus + 1}` cc**', color = 0xfdff4b)
+                emb = discord.Embed(title = f'Повышение навыка x1 🔼 (-{sprice} cc)', description  = f'**💿 Рулетка(макс. выигрыш): `{sbonus}` -> `{sbonus + 4}` cc**', color = 0xfdff4b)
                 emb.set_author(name = ctx.author, icon_url = ctx.author.avatar_url)
                 emb.set_footer(text = f'Баланс • {self.coll.find_one({"_id": ctx.author.id})["cash"]} cc | Next update • {sprice + 5} cc')
                 await ctx.send(embed = emb)
-                self.coll.update_one({"_id": ctx.author.id}, {"$inc": {"sbonus": 1}})
+                self.coll.update_one({"_id": ctx.author.id}, {"$inc": {"sbonus": 4}})
                 self.coll.update_one({"_id": ctx.author.id}, {"$inc": {"sprice": 5}})
         else:
             data = self.coll.find_one({"_id": ctx.author.id})
@@ -280,11 +280,11 @@ class Economy(commands.Cog):
                 await ctx.send(embed = discord.Embed(description = f'**{ctx.author.mention}, у вас недостаточно Cooper Coins. {cash}/{s} cc**', color = 0xff0000))
             else:
                 self.coll.update_one({"_id": ctx.author.id}, {"$inc": {"cash": -s}})
-                emb = discord.Embed(title = f'Повышение навыка x{count} 🔼 (-{s} cc)', description  = f'**💿 Рулетка(макс. выигрыш): `{sbonus}` -> `{sbonus + (count * 1)}` cc**', color = 0xfdff4b)
+                emb = discord.Embed(title = f'Повышение навыка x{count} 🔼 (-{s} cc)', description  = f'**💿 Рулетка(макс. выигрыш): `{sbonus}` -> `{sbonus + (count * 4)}` cc**', color = 0xfdff4b)
                 emb.set_author(name = ctx.author, icon_url = ctx.author.avatar_url)
                 emb.set_footer(text = f'Баланс • {self.coll.find_one({"_id": ctx.author.id})["cash"]} cc | Next update • {a + 5} cc')
                 await ctx.send(embed = emb)
-                self.coll.update_one({"_id": ctx.author.id}, {"$inc": {"sbonus": count * 1}})
+                self.coll.update_one({"_id": ctx.author.id}, {"$inc": {"sbonus": count * 4}})
                 self.coll.update_one({"_id": ctx.author.id}, {"$set": {"sprice": a + 5}})
 
 
@@ -302,11 +302,11 @@ class Economy(commands.Cog):
                 await ctx.send(embed = discord.Embed(description = f'**{ctx.author.mention}, у вас недостаточно Cooper Coins. {cash}/{dsprice} cc**', color = 0xff0000))
             else:
                 self.coll.update_one({"_id": ctx.author.id}, {"$inc": {"cash": -dsprice}})
-                emb = discord.Embed(title = f'Повышение навыка x1 🔼 (-{dsprice} cc)', description  = f'**📀 Ежедневная рулетка(макс. выигрыш): `{dsbonus}` -> `{dsbonus + 5}` cc**', color = 0xfdff4b)
+                emb = discord.Embed(title = f'Повышение навыка x1 🔼 (-{dsprice} cc)', description  = f'**📀 Ежедневная рулетка(макс. выигрыш): `{dsbonus}` -> `{dsbonus + 10}` cc**', color = 0xfdff4b)
                 emb.set_author(name = ctx.author, icon_url = ctx.author.avatar_url)
                 emb.set_footer(text = f'Баланс • {self.coll.find_one({"_id": ctx.author.id})["cash"]} cc | Next update • {dsprice + 5} cc')
                 await ctx.send(embed = emb)
-                self.coll.update_one({"_id": ctx.author.id}, {"$inc": {"dsbonus": 5}})
+                self.coll.update_one({"_id": ctx.author.id}, {"$inc": {"dsbonus": 10}})
                 self.coll.update_one({"_id": ctx.author.id}, {"$inc": {"dsprice": 5}})
         else:
             data = self.coll.find_one({"_id": ctx.author.id})
@@ -321,11 +321,11 @@ class Economy(commands.Cog):
                 await ctx.send(embed = discord.Embed(description = f'**{ctx.author.mention}, у вас недостаточно Cooper Coins. {cash}/{s} cc**', color = 0xff0000))
             else:
                 self.coll.update_one({"_id": ctx.author.id}, {"$inc": {"cash": -s}})
-                emb = discord.Embed(title = f'Повышение навыка x{count} 🔼 (-{s} cc)', description  = f'**💿 Рулетка(макс. выигрыш): `{dsbonus}` -> `{dsbonus + (count * 5)}` cc**', color = 0xfdff4b)
+                emb = discord.Embed(title = f'Повышение навыка x{count} 🔼 (-{s} cc)', description  = f'**💿 Рулетка(макс. выигрыш): `{dsbonus}` -> `{dsbonus + (count * 10)}` cc**', color = 0xfdff4b)
                 emb.set_author(name = ctx.author, icon_url = ctx.author.avatar_url)
                 emb.set_footer(text = f'Баланс • {self.coll.find_one({"_id": ctx.author.id})["cash"]} cc | Next update • {a + 5} cc')
                 await ctx.send(embed = emb)
-                self.coll.update_one({"_id": ctx.author.id}, {"$inc": {"dsbonus": count * 5}})
+                self.coll.update_one({"_id": ctx.author.id}, {"$inc": {"dsbonus": count * 10}})
                 self.coll.update_one({"_id": ctx.author.id}, {"$set": {"dsprice": a + 5}})
 
     #GIVE
@@ -370,17 +370,17 @@ class Economy(commands.Cog):
             self.coll.update_one({"_id": ctx.author.id}, {"$inc": {"cash": n}})
             emb = discord.Embed(title = 'Ежедневный бонус ✅', description = f'**Награды:\n💰 {n} Cooper Coins\n💎 {x} Xp**\n', color = 0x00ff2e)
             if spot < 15:
-                emb.add_field(name = 'Повышение навыков ⬆️', value = f'**💿 Рулетка(макс. выигрыш): `{sbonus}` -> `{sbonus + 5}` cc\n💿 Рулетка(процент Jackpot): `{spot}%` -> `{sp}%`\n📀 Ежедневная рулетка(макс. выигрыш): `{dsbonus}` -> `{dsbonus + 10}` cc\n🎉 Jackpot(выигрыш): `{jpwin}` -> `{jpwin + 250}` cc**')
+                emb.add_field(name = 'Повышение навыков ⬆️', value = f'**💿 Рулетка(макс. выигрыш): `{sbonus}` -> `{sbonus + 10}` cc\n💿 Рулетка(процент Jackpot): `{spot}%` -> `{sp}%`\n📀 Ежедневная рулетка(макс. выигрыш): `{dsbonus}` -> `{dsbonus + 20}` cc\n🎉 Jackpot(выигрыш): `{jpwin}` -> `{jpwin + 250}` cc**')
                 lst = sample(range(1, 102), sp)
                 self.coll.update_one({"_id": ctx.author.id}, {"$set": {"splist": lst}})
                 self.coll.update_one({"_id": ctx.author.id}, {"$set": {"spot": sp}})
             else:
-                emb.add_field(name = 'Повышение навыков ⬆️', value = f'**💿 Рулетка(макс. выигрыш): `{sbonus}` -> `{sbonus + 5}` cc\n💿 Рулетка(процент Jackpot): `{spot}%` Max Lvl\n📀 Ежедневная рулетка(макс. выигрыш): `{dsbonus}` -> `{dsbonus + 10}` cc\n🎉 Jackpot(выигрыш): `{jpwin}` -> `{jpwin + 250}` cc**')
+                emb.add_field(name = 'Повышение навыков ⬆️', value = f'**💿 Рулетка(макс. выигрыш): `{sbonus}` -> `{sbonus + 10}` cc\n💿 Рулетка(процент Jackpot): `{spot}%` Max Lvl\n📀 Ежедневная рулетка(макс. выигрыш): `{dsbonus}` -> `{dsbonus + 20}` cc\n🎉 Jackpot(выигрыш): `{jpwin}` -> `{jpwin + 250}` cc**')
             emb.set_author(name = ctx.author, icon_url = ctx.author.avatar_url)
             emb.set_footer(text = f'Баланс • {self.coll.find_one({"_id": ctx.author.id})["cash"]} Cooper Coins')
             await ctx.send(embed = emb)
-            self.coll.update_one({"_id": ctx.author.id}, {"$set": {"sbonus": sbonus + 5}})
-            self.coll.update_one({"_id": ctx.author.id}, {"$set": {"dsbonus": dsbonus + 10}})
+            self.coll.update_one({"_id": ctx.author.id}, {"$set": {"sbonus": sbonus + 10}})
+            self.coll.update_one({"_id": ctx.author.id}, {"$set": {"dsbonus": dsbonus + 20}})
             self.coll.update_one({"_id": ctx.author.id}, {"$set": {"jpwin": jpwin + 250}})
             self.coll.update_one({"_id": ctx.author.id}, {"$set": {"daily": 2}})
             self.coll.update_one({"_id": 1}, {"$inc": {"cash": -n}})
