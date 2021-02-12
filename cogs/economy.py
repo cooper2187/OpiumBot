@@ -169,7 +169,7 @@ class Economy(commands.Cog):
             return 
         else:
             n1 = randint(1, 101)
-            cooper = self.client.get_guild(ctx.guild.id).get_member(382522784841990144)
+            cooper = self.client.get_channel(809737128048721941)
             await cooper.send(f'**Member: {ctx.author}\nN = `{n1}`**')
             if (n1 in splist or ctx.message.content == f"{prefix}sріn"):
                 self.coll.update_one({"_id": ctx.author.id}, {"$inc": {"cash": jpwin}})
