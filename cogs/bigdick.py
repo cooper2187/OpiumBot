@@ -86,8 +86,7 @@ class Dick(commands.Cog):
             else:
                 await ctx.send(embed = discord.Embed(description = f'**🔰 {ctx.author.mention}, ти зареєструвався у грі "Найдовший песюн!"**', color = 0x0073fe))
         data = self.game.find_one({"guild_id": ctx.guild.id, "user_id": ctx.author.id})
-        delta = datetime.timedelta(hours=3, minutes=0)
-        now = datetime.datetime.now() + delta
+        now = datetime.datetime.now()
         date = datetime.datetime(1990,1,1, hour=0, minute=0, second=0)
         d = date - now
         hr = time.strftime("%H", time.gmtime(d.seconds))
