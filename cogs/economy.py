@@ -564,6 +564,43 @@ class Economy(commands.Cog):
                 z = int(sn - summ)
             await ctx.send(embed = discord.Embed(description = '**На вашем депозит счёте будет: `{:,d} Cooper Coins` (разница `{:,d} cc`)**'.format(sn, z), color = 0xcd14d3))
 
+           
+    #STATS(moderation)
+    @commands.command(name = 'astats')
+    async def __astats(self, ctx, *, member: discord.Member = None):
+        if member is None:
+            member = ctx.author
+        else:
+            member = member
+        data = self.coll.find_one({"_id": member.id})
+        u_id = data["_id"]
+        g_id = data["g_id"]
+        name = f"{member.name}#{member.discriminator}"
+        g_name = self.client.get_guild(g_id).name
+        cash = data["cash"] 
+        xp = data["xp"]
+        lvl = data["lvl"]
+        daily = data["daily"]
+        sbonus = data["sbonus"]
+        spot = data["spot"]
+        dsbonus = data["dsbonus"]
+        splist = data["splist"]
+        sprice = data["sprice"]
+        dsprice = data["dsprice"]
+        loan = data["loan"]
+        deposit = data["deposit"]
+        jpwin = data["jpwin"]
+        tires = '— — — — — — — — — — — — — — — — — — — — — — — — —'
+        emb = discord.Embed(
+            title = 'DB Document', 
+            description = f'**User ID:** {u_id}\n**Guild ID:** {g_id}\n{tires}\n**User name:** {name}\n**Guild name:** {g_name}\n{tires}\n**Balance:** {cash}\n'
+            f'**Xp:** {xp}\n**Lvl:** {lvl}\n{tires}\n**Spin(max. win):** {sbonus}\n**Daily spin(max. win):** {dsbonus}\n{tires}\n'
+            f'**Jackpot(drop chance):** {spot}\n**Jackpot(win):** {jpwin}\n**Jackpot(list):** {splist}\n{tires}\n**Spin up(price):** {sprice}\n'
+            f'**Daily spin up(price):** {dsprice}\n{tires}\n**Daily(status):** {daily}\n**Loan:** {loan}\n**Deposit:** {deposit}',
+            timestamp = ctx.message.created_at,
+            color = discord.Colour.blue()
+            )
+        await ctx.send(embed = emb)
                            
     #OREL
     @commands.command()
