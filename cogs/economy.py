@@ -369,7 +369,7 @@ class Economy(commands.Cog):
             self.coll.update_one({"_id": ctx.author.id}, {"$inc": {"xp": x}})
             self.coll.update_one({"_id": ctx.author.id}, {"$inc": {"cash": n}})
             emb = discord.Embed(title = 'Ежедневный бонус ✅', description = f'**Награды:\n💰 {n} Cooper Coins\n💎 {x} Xp**\n', color = 0x00ff2e)
-            if spot < 15:
+            if spot < 25:
                 emb.add_field(name = 'Повышение навыков ⬆️', value = f'**💿 Рулетка(макс. выигрыш): `{sbonus}` -> `{sbonus + 10}` cc\n💿 Рулетка(процент Jackpot): `{spot}%` -> `{sp}%`\n📀 Ежедневная рулетка(макс. выигрыш): `{dsbonus}` -> `{dsbonus + 20}` cc\n🎉 Jackpot(выигрыш): `{jpwin}` -> `{jpwin + 250}` cc**')
                 lst = sample(range(1, 102), sp)
                 self.coll.update_one({"_id": ctx.author.id}, {"$set": {"splist": lst}})
