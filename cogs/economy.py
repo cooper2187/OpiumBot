@@ -68,9 +68,9 @@ class Economy(commands.Cog):
     @commands.command()
     async def balance(self, ctx, member: discord.Member = None):
         if member is None:
-            await ctx.send(embed = discord.Embed(description = f'**Баланс пользователя {ctx.author.mention}: {self.coll.find_one({"_id": ctx.author.id})["cash"]} Cooper Coins**', color = 0x00a5ff))
+            await ctx.send(embed = discord.Embed(description = '**Баланс пользователя {}: {:,d} Cooper Coins**'.foramt(ctx.author.mention, self.coll.find_one({"_id": ctx.author.id})["cash"]), color = 0x00a5ff))
         else:
-            await ctx.send(embed = discord.Embed(description = f'**Баланс пользователя {member.mention}: {self.coll.find_one({"_id": member.id})["cash"]} Cooper Coins**', color = 0x00a5ff))
+            await ctx.send(embed = discord.Embed(description = '**Баланс пользователя {}: {:,d} Cooper Coins**'.foramt(member.mention, self.coll.find_one({"_id": member.id})["cash"]), color = 0x00a5ff))
 
     #STATS
     @commands.command()
@@ -90,7 +90,7 @@ class Economy(commands.Cog):
         dsbonus = data["dsbonus"]
         jpwin = data["jpwin"]
         lvl_xp = 10 + 10 * data["lvl"]
-        emb = discord.Embed(description = f'**Пользователь: {m.mention}\n\nУровень: `{a_lvl}` Lvl\nОпыт: `{a_xp}`/`{lvl_xp}` Xp\nБаланс: `{a_cash}` Cooper Coins\nБаланс депозита: `{d_cash}` Cooper Coins**', timestamp = ctx.message.created_at, color = 0x00ffd5)
+        emb = discord.Embed(description = '**Пользователь: {}\n\nУровень: `{}` Lvl\nОпыт: `{}`/`{}` Xp\nБаланс: `{}` Cooper Coins\nБаланс депозита: `{:,d}` Cooper Coins**'.format(m.mention, a_lvl, a_xp, lvl_xp, a_cash, d_cash), timestamp = ctx.message.created_at, color = 0x00ffd5)
         emb.set_author(name = f'{m} | Статистика', icon_url = m.avatar_url)
         emb.add_field(name = 'Навыки:', value = f'\n**💿 Рулетка(выигрыш): от `{round((sbonus - 9) * 0.7)}` до `{sbonus}` cc\n💿 Рулетка(процент Jackpot): `{spot}%`\n📀 Ежедневная рулетка(выигрыш): от `{round((dsbonus - 20) * 0.7)}` до `{dsbonus}` cc\n🎉 Jackpot(выигрыш): `{jpwin}` cc**')
         emb.set_footer(text = 'Opium 🌴 Team', icon_url = 'https://cdn.discordapp.com/avatars/722921602026700861/654ff8c616269acc148f204c17670aaa.webp?size=1024')
@@ -346,7 +346,7 @@ class Economy(commands.Cog):
     @commands.command()
     async def bank(self, ctx):
         money = self.coll.find_one({"_id": 1})["cash"]
-        e = discord.Embed(description = f'**💸 Состояние банка: `{money}` Cooper Coins**', timestamp = ctx.message.created_at, color = 0x5797af)
+        e = discord.Embed(description = f'**💸 Состояние банка: `{:,d}` Cooper Coins**'.foramt(money), timestamp = ctx.message.created_at, color = 0x5797af)
         e.set_author(name = f'{ctx.guild.name} | Genesis Bank', icon_url = ctx.guild.icon_url)
         e.set_footer(text = 'Opium Team')
         await ctx.send(embed = e)			   
@@ -483,7 +483,7 @@ class Economy(commands.Cog):
     async def mydeposit(self, ctx):
         data = self.coll.find_one({"_id": ctx.author.id})
         dep = data["deposit"]
-        emb = discord.Embed(description = f'**Баланс вашего депозит счёта: `{int(dep)}` Cooper Coins**', color = 0x02c4fa, timestamp = ctx.message.created_at)
+        emb = discord.Embed(description = '**Баланс вашего депозит счёта: `{:,d}` Cooper Coins**'.foramt(int(dep)), color = 0x02c4fa, timestamp = ctx.message.created_at)
         emb.set_author(name = f'{ctx.author} | Депозит', icon_url = ctx.author.avatar_url)
         emb.set_footer(text = f'Opium 🌴 Bot')
         await ctx.send(embed = emb)
@@ -501,7 +501,7 @@ class Economy(commands.Cog):
             self.coll.update_one({"_id": ctx.author.id}, {"$inc": {"deposit": amount}})
             emb = discord.Embed(description = f'**Вы положили `{amount}` Cooper Coins на ваш депозит счёт**', color = 0x28e91c)
             emb.set_author(name = f'{ctx.author} | Пополнение депозита', icon_url = ctx.author.avatar_url)
-            emb.set_footer(text = f'Баланс депозита • {int(self.coll.find_one({"_id": ctx.author.id})["deposit"])} Cooper Coins')
+            emb.set_footer(text = 'Баланс депозита • {:,d} Cooper Coins'.format(int(self.coll.find_one({"_id": ctx.author.id})["deposit"])))
             await ctx.send(embed = emb)
 
     #GET DEPOSIT
@@ -517,7 +517,7 @@ class Economy(commands.Cog):
             self.coll.update_one({"_id": ctx.author.id}, {"$inc": {"cash": amount}})
             emb = discord.Embed(description = f'**Вы сняли `{amount}` Cooper Coins с вашего депозит счёта**', color = 0xd36262)
             emb.set_author(name = f'{ctx.author} | Снятие депозита', icon_url = ctx.author.avatar_url)
-            emb.set_footer(text = f'Баланс депозита • {int(self.coll.find_one({"_id": ctx.author.id})["deposit"])} Cooper Coins')
+            emb.set_footer(text = 'Баланс депозита • {:,d} Cooper Coins'.format(int(self.coll.find_one({"_id": ctx.author.id})["deposit"])))
             await ctx.send(embed = emb)
 
     #DEPOSIT CALCULATOR
