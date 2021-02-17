@@ -346,7 +346,7 @@ class Economy(commands.Cog):
     @commands.command()
     async def bank(self, ctx):
         money = self.coll.find_one({"_id": 1})["cash"]
-        e = discord.Embed(description = f'**💸 Состояние банка: `{:,d}` Cooper Coins**'.foramt(money), timestamp = ctx.message.created_at, color = 0x5797af)
+        e = discord.Embed(description = '**💸 Состояние банка: `{:,d}` Cooper Coins**'.foramt(money), timestamp = ctx.message.created_at, color = 0x5797af)
         e.set_author(name = f'{ctx.guild.name} | Genesis Bank', icon_url = ctx.guild.icon_url)
         e.set_footer(text = 'Opium Team')
         await ctx.send(embed = e)			   
