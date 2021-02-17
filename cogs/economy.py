@@ -68,9 +68,9 @@ class Economy(commands.Cog):
     @commands.command()
     async def balance(self, ctx, member: discord.Member = None):
         if member is None:
-            await ctx.send(embed = discord.Embed(description = '**Баланс пользователя {}: {:,d} Cooper Coins**'.foramt(ctx.author.mention, int(self.coll.find_one({"_id": ctx.author.id})["cash"])), color = 0x00a5ff))
+            await ctx.send(embed = discord.Embed(description = '**Баланс пользователя {}: {:,d} Cooper Coins**'.format(ctx.author.mention, int(self.coll.find_one({"_id": ctx.author.id})["cash"])), color = 0x00a5ff))
         else:
-            await ctx.send(embed = discord.Embed(description = '**Баланс пользователя {}: {:,d} Cooper Coins**'.foramt(member.mention, int(self.coll.find_one({"_id": member.id})["cash"])), color = 0x00a5ff))
+            await ctx.send(embed = discord.Embed(description = '**Баланс пользователя {}: {:,d} Cooper Coins**'.format(member.mention, int(self.coll.find_one({"_id": member.id})["cash"])), color = 0x00a5ff))
 
     #STATS
     @commands.command()
@@ -483,7 +483,7 @@ class Economy(commands.Cog):
     async def mydeposit(self, ctx):
         data = self.coll.find_one({"_id": ctx.author.id})
         dep = int(data["deposit"])
-        emb = discord.Embed(description = '**Баланс вашего депозит счёта: `{:,d}` Cooper Coins**'.foramt(dep), color = 0x02c4fa, timestamp = ctx.message.created_at)
+        emb = discord.Embed(description = '**Баланс вашего депозит счёта: `{:,d}` Cooper Coins**'.format(dep), color = 0x02c4fa, timestamp = ctx.message.created_at)
         emb.set_author(name = f'{ctx.author} | Депозит', icon_url = ctx.author.avatar_url)
         emb.set_footer(text = f'Opium 🌴 Bot')
         await ctx.send(embed = emb)
