@@ -83,7 +83,7 @@ class Economy(commands.Cog):
             m = member
         a_xp = data["xp"]
         a_cash = data["cash"]
-        d_cash = round(data['deposit'])
+        d_cash = int(data['deposit'])
         a_lvl = data["lvl"]
         sbonus = data["sbonus"]
         spot = data["spot"]
