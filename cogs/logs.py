@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 import datetime
 import pytz
+import locale
 
 class Logs(commands.Cog):
 
@@ -51,6 +52,7 @@ class Logs(commands.Cog):
             elif message.author.bot or message.author.id == 382522784841990144:
                 return
             else:
+                locale.setlocale(locale.LC_ALL, "ru")
                 time = datetime.datetime.now(pytz.timezone('Europe/Moscow')).strftime("%A, %d %B %Y, %H:%M:%S")
                 e = discord.Embed(title = f'{message.guild.name} | Сообщение удалено ✉️❌', description = f'**Отправитель: {message.author.mention}. Канал: {message.channel.mention}\nСообщение:** {message.content}')
                 e.set_footer(text = f'{time}', icon_url = message.author.avatar_url)
