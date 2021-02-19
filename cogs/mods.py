@@ -107,7 +107,7 @@ class Mods(commands.Cog):
             roles.append(r)
             rlist.append(r.mention)
         if len(roles) > 0:
-            rolelist = ', '.join(rlist)
+            rolelist = ', '.join(rlist.reverse())
             col = roles[len(roles) - 1].color
             i = 2
             while col.value == 000000:
