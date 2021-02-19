@@ -94,16 +94,45 @@ class Mods(commands.Cog):
 
     #ACCOUNT INFORMATION
     @commands.command()
-    async def info(self, ctx, *, member:discord.Member = None):
+    async def info(self, ctx, *, member: discord.Member = None):
         if member is None:
-            author = ctx.author
+            member = ctx.author
         else:
-            author = member
-        roless = [role for role in author.roles]
-        emb = discord.Embed(title = f'💠 Информация о пользователе: 💠\n', color = 0x546c9b, description = f'`Имя пользователя:`  **{author}**\n\n`Никнейм на сервере:` **{author.display_name}**\n\n`Account ID:`  **{author.id}**\n\n`Сетевой статус:`  **{author.status}**\n\n`Когда присоединился:`  ' + author.joined_at.strftime('**%a, %#d %B %Y, %X MSK**') + '\n\n`Аккаунт был создан:`  ' + author.created_at.strftime('**%a, %#d %B %Y, %X MSK**\n'), timestamp = ctx.message.created_at)
-        emb.set_thumbnail(url = author.avatar_url)
-        emb.add_field(name = f'`Роли ({len(roless)})`', value = ', '.join([role.name for role in roless]))
-        await ctx.send(embed = emb)
+            member = member
+        rlist = []
+        roles = []
+        for r in member.roles:
+            if r.name == '@everyone':
+                continue
+            roles.append(r)
+            rlist.append(r.mention)
+        if len(roles) > 0:
+            rolelist = ', '.join(rlist)
+            col = roles[len(roles) - 1].color
+            i = 2
+            while col.value == 000000:
+                if i > len(roles):
+                    col = 0x6bff00
+                    break
+                col = roles[len(roles) - i].color
+                i += 1
+        else:
+            rolelist = 'None'
+            col = 0x6bff00
+        e = discord.Embed(color = col, timestamp = ctx.message.created_at)
+        e.set_author(name = f'Информация о пользователе', icon_url = member.avatar_url)
+        e.add_field(name = 'Имя пользователя:', value = member)
+        if member.nick is None:
+            n = member.name
+        else:
+            n = member.nick
+        e.add_field(name = 'Никнейм на сервере:', value = n, inline = False)
+        e.add_field(name = 'Присоединился к серверу:', value = member.joined_at.strftime("%a, %d.%m.%Y в %H:%M"), inline = False)
+        e.add_field(name = 'Аккаунт был создан:', value = member.created_at.strftime("%a, %d.%m.%Y в %H:%M"), inline = True)
+        e.add_field(name = f'Роли [{len(rlist)}]:', value = rolelist, inline = False)
+        e.set_thumbnail(url = member.avatar_url)
+        e.set_footer(text = f'Account ID: {member.id}')
+        await ctx.send(embed = e)
 
     #SET NICK
     @commands.command()
