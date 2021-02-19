@@ -122,11 +122,7 @@ class Mods(commands.Cog):
         e = discord.Embed(color = col, timestamp = ctx.message.created_at)
         e.set_author(name = f'Информация о пользователе', icon_url = member.avatar_url)
         e.add_field(name = 'Имя пользователя:', value = member)
-        if member.nick is None:
-            n = member.name
-        else:
-            n = member.nick
-        e.add_field(name = 'Никнейм на сервере:', value = n, inline = False)
+        e.add_field(name = 'Никнейм на сервере:', value = member.display_name, inline = False)
         e.add_field(name = 'Присоединился к серверу:', value = member.joined_at.strftime("%a, %d.%m.%Y в %H:%M"), inline = False)
         e.add_field(name = 'Аккаунт был создан:', value = member.created_at.strftime("%a, %d.%m.%Y в %H:%M"), inline = True)
         e.add_field(name = f'Роли [{len(rlist)}]:', value = rolelist, inline = False)
