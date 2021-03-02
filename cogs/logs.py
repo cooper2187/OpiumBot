@@ -14,8 +14,8 @@ class Logs(commands.Cog):
         logchannel = self.client.get_channel(722457936051306596)
         if not before.guild.id == 722190594268725288:
             return
-        if before.display_name != after.display_name:
-            e = discord.Embed(title = f'{before.guild.name} | Смена никнейма', color = 0x546c9b, description = f'**Пользователь: {before.mention}\n\nДо: `{before.display_name}`\n\nПосле: `{after.display_name}`**')
+        if before.nick != after.nick:
+            e = discord.Embed(title = f'{before.guild.name} | Смена никнейма', color = 0x546c9b, description = f'**Пользователь: {before.mention}\n\nДо: `{before.nick}`\n\nПосле: `{after.nick}`**')
             await logchannel.send(embed = e)
 
     #ON MESSAGE EDIT
