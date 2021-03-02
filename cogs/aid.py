@@ -40,8 +40,8 @@ class Aid(commands.Cog):
             await ctx.author.send(embed = emb)
         elif (name == 'spin' or name == 'спин' or name == 'ызшт' or name == 'спін'):
             await ctx.send(embed = discord.Embed(title = f'Команда: {prefix}spin', description = '**Псевдонимы**: {}спин, {}спін, {}ызшт\n**Описание**: Крутить рулетку\n**Перезарядка**: 60 минут\n**Использование**:\n{}spin\n{}спін\n{}спин\n{}ызшт'.format(prefix, prefix, prefix, prefix, prefix, prefix, prefix), color = discord.Colour.dark_gray()))
-        elif (name == 'true' or name == 'try'):
-            await ctx.send(embed = discord.Embed(title = f'Команда: {prefix}true', description = '**Псевдонимы**: {}try\n**Описание**: Удвоить сумму. Шанс 50%\n**Перезарядка**: 1 секунда\n**Использование**:\n{}true [сумма]\n{}try [сумма]\n**Пример**:\n{}true 15\n{}try 25'.format(prefix, prefix, prefix, prefix, prefix), color = discord.Colour.dark_gray()))
+        elif (name == 'true' or name == 'try' or name = 'false'):
+            await ctx.send(embed = discord.Embed(title = f'Команда: {prefix}try', description = '**Псевдонимы**: {}true, {}false\n**Описание**: Удвоить сумму. Шанс 50%\n**Перезарядка**: 1 секунда\n**Использование**:\n{}true [сумма]\n{}try [сумма]\n{}false [сумма]\n**Пример**:\n{}true 15\n{}try 25\n{}false 50'.format(prefix, prefix, prefix, prefix, prefix, prefix, prefix, prefix), color = discord.Colour.dark_gray()))
         elif name == 'balance':
             await ctx.send(embed = discord.Embed(title = f'Команда: {prefix}balance', description = '**Описание**: Посмотреть баланс\n**Использование**:\n{}balance\n{}balance [пользователь]\n**Пример**:\n{}balance\n{}balance cooooper'.format(prefix, prefix, prefix, prefix), color = discord.Colour.dark_gray()))
         elif name == 'stats':
