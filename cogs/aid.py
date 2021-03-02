@@ -31,7 +31,7 @@ class Aid(commands.Cog):
                 
     #HELP
     @commands.command()
-    async def helpp(self, ctx, name = None):
+    async def help(self, ctx, name = None):
         prefix = self.prx.find_one({"_id": ctx.guild.id})["prefix"]
         if name is None:
             await ctx.message.delete()
