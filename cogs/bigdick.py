@@ -95,11 +95,11 @@ class Dick(commands.Cog):
             tt = '{} ч. {} мин.'.format(int(hr), int(mins) + 1)
         else:
             tt = '{} год. {} хв.'.format(int(hr), int(mins) + 1)
-        n = randint(1, 20)
+        n = randint(0, 7)
         lplus = randint(1, 10)
         lminus = randint(-5, -1)
-        a = [18, 5, 6, 3, 4, 7, 12, 9, 15, 11, 17, 8] 
-        b = [10, 13, 19, 2, 16, 14, 20, 1]
+        a = [1, 2, 4, 5, 6] 
+        b = [0, 3, 7]
         if data["in_game"] == 0:
             pass
         else:
