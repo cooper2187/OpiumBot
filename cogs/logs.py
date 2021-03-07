@@ -17,6 +17,29 @@ class Logs(commands.Cog):
         if before.nick != after.nick:
             e = discord.Embed(title = f'{before.guild.name} | Смена никнейма', color = 0x546c9b, description = f'**Пользователь: {before.mention}\n\nДо: `{before.nick}`\n\nПосле: `{after.nick}`**')
             await logchannel.send(embed = e)
+        try:
+            ctx = self.client.get_channel(722457936051306596)
+            rlist1 = []
+            rlist2 = []
+            for r in before.roles:
+                rlist1.append(r.id)
+            for r in after.roles:
+                rlist2.append(r.id)
+            if len(rlist1) > len(rlist2):
+                res = list(set(rlist1) - set(rlist2))
+                role = discord.utils.get(before.guild.roles, id = res[0])
+                e = discord.Embed(description = f'**{before.mention} was removed from the `{role.name}` role**', color = discord.Colour.blue(), timestamp = datetime.datetime.now())
+            elif len(rlist1) < len(rlist2):
+                res = list(set(rlist2) - set(rlist1))
+                role = discord.utils.get(before.guild.roles, id = res[0])
+                e = discord.Embed(description = f'**{before.mention} was given the `{role.name}` role**', color = discord.Colour.blue(), timestamp = datetime.datetime.now())
+            else:
+                return
+            e.set_author(name = f"{before} | Обновление ролей", icon_url = before.avatar_url)
+            e.set_footer(text = f'Role ID: {role.id}')
+            await ctx.send(embed = e)
+        except IndexError:
+            pass
 
     #ON MESSAGE EDIT
     @commands.Cog.listener()
