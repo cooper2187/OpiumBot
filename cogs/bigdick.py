@@ -67,6 +67,7 @@ class Dick(commands.Cog):
             await ctx.send(embed = discord.Embed(description = f'**{prefix}set_lang [rus/ukr]** - Установить язык(Русский/Украинский)\n**{prefix}set_lang rus**', color = 0x667676))     
 
     @commands.command()
+    @commands.cooldown(1, 1, commands.BucketType.user)
     async def dick(self, ctx):
         lang = self.game.find_one({"guild_id": ctx.guild.id})["lang"]
         if not ctx.channel.id == self.game.find_one({"guild_id": ctx.guild.id})["channel_id"]:
