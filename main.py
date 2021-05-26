@@ -13,7 +13,7 @@ def get_prefix(client, message):
 
 
 client = commands.Bot(command_prefix = get_prefix, intents = discord.Intents.all())
-#client.remove_command('help')
+client.remove_command('help')
 
 @client.event
 async def on_guild_join(guild):
