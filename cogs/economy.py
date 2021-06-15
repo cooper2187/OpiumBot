@@ -739,10 +739,22 @@ class Economy(commands.Cog):
                                 await ormsg1.clear_reactions()
                             else:
                                 return
-                if (payload.member.id == ormember1.id or payload.member.id == orauthor1.id):
+                if (payload.member.id == ormember1.id):
                     if payload.message_id == ormsg1.id:
                         if payload.emoji.id == 768155761171234887:
-                            await ormsg1.delete()
+                            emb = discord.Embed(description = f'**{orauthor1.mention} предложил {ormember1.mention} игру на {ccg1} cc\n\n{orauthor1.display_name} - <:unverified:768155761171234887>\n{ormember1.display_name} - <:unverified:768155761171234887>\n{ormember1.display_name} отказался от игры**', color = 0x425be0)
+                            emb.set_author(name = f'{payload.member.guild.name} | Орёл - Решка', icon_url = payload.member.guild.icon_url)
+                            emb.set_footer(text = f'(Решка) {orauthor1.name} x {ormember1.name} (Орёл)')
+                            await ormsg1.edit(embed = emb)
+                            await ormsg1.clear_reactions()
+                if (payload.member.id == orauthor1.id):
+                    if payload.message_id == ormsg1.id:
+                        if payload.emoji.id == 768155761171234887:
+                            emb = discord.Embed(description = f'**{orauthor1.mention} предложил {ormember1.mention} игру на {ccg1} cc\n\n{orauthor1.display_name} - <:unverified:768155761171234887>\n{ormember1.display_name} - <:unverified:768155761171234887>\n{orauthor1.display_name} отказался от игры**', color = 0x425be0)
+                            emb.set_author(name = f'{payload.member.guild.name} | Орёл - Решка', icon_url = payload.member.guild.icon_url)
+                            emb.set_footer(text = f'(Решка) {orauthor1.name} x {ormember1.name} (Орёл)')
+                            await ormsg1.edit(embed = emb)
+                            await ormsg1.clear_reactions()
         except NameError:
             return
 
