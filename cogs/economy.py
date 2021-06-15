@@ -693,7 +693,7 @@ class Economy(commands.Cog):
                                 e1.set_author(name = f'{payload.member.guild.name} | Орёл - Решка', icon_url = payload.member.guild.icon_url)
                                 e1.set_footer(text = f'(Орёл) {orauthor.name} x {ormember.name} (Решка)')
                                 await channel.send(embed = e1)
-                                await ormsg.delete()
+                                await ormsg.clear_reactions()
                             elif n == 1:
                                 self.coll.update_one({"_id": ormember.id}, {"$inc": {"cash": ccg}})
                                 self.coll.update_one({"_id": orauthor.id}, {"$inc": {"cash": -ccg}})
@@ -702,7 +702,7 @@ class Economy(commands.Cog):
                                 e2.set_author(name = f'{payload.member.guild.name} | Орёл - Решка', icon_url = payload.member.guild.icon_url)
                                 e2.set_footer(text = f'(Орёл) {orauthor.name} x {ormember.name} (Решка)')
                                 await channel.send(embed = e2)
-                                await ormsg.delete()
+                                await ormsg.clear_reactions()
                             else:
                                 return
                 if (payload.member.id == ormember.id or payload.member.id == orauthor.id):
@@ -727,7 +727,7 @@ class Economy(commands.Cog):
                                 e1.set_author(name = f'{payload.member.guild.name} | Орёл - Решка', icon_url = payload.member.guild.icon_url)
                                 e1.set_footer(text = f'(Решка) {orauthor1.name} x {ormember1.name} (Орёл)')
                                 await channel.send(embed = e1)
-                                await ormsg1.delete()
+                                await ormsg1.clear_reactions()
                             elif n == 1:
                                 self.coll.update_one({"_id": orauthor1.id}, {"$inc": {"cash": ccg1}})
                                 self.coll.update_one({"_id": ormember1.id}, {"$inc": {"cash": -ccg1}})
@@ -736,7 +736,7 @@ class Economy(commands.Cog):
                                 e2.set_author(name = f'{payload.member.guild.name} | Орёл - Решка', icon_url = payload.member.guild.icon_url)
                                 e2.set_footer(text = f'(Решка) {orauthor1.name} x {ormember1.name} (Орёл)')
                                 await channel.send(embed = e2)
-                                await ormsg1.delete()
+                                await ormsg1.clear_reactions()
                             else:
                                 return
                 if (payload.member.id == ormember1.id or payload.member.id == orauthor1.id):
