@@ -705,10 +705,22 @@ class Economy(commands.Cog):
                                 await ormsg.clear_reactions()
                             else:
                                 return
-                if (payload.member.id == ormember.id or payload.member.id == orauthor.id):
+                if (payload.member.id == ormember.id):
                     if payload.message_id == ormsg.id:
                         if payload.emoji.id == 768155761171234887:
-                            await ormsg.delete()
+                            emb = discord.Embed(description = f'**{orauthor.mention} предложил {ormember.mention} игру на {ccg1} cc\n\n{orauthor.display_name} - <:unverified:768155761171234887>\n{ormember.display_name} - <:unverified:768155761171234887>\n{ormember.display_name} отказался от игры**', color = 0x425be0)
+                            emb.set_author(name = f'{payload.member.guild.name} | Орёл - Решка', icon_url = payload.member.guild.icon_url)
+                            emb.set_footer(text = f'(Орёл) {orauthor.name} x {ormember.name} (Решка)')
+                            await ormsg.edit(embed = emb)
+                            await ormsg.clear_reactions()
+                if (payload.member.id == orauthor.id):
+                    if payload.message_id == ormsg.id:
+                        if payload.emoji.id == 768155761171234887:
+                            emb = discord.Embed(description = f'**{orauthor.mention} предложил {ormember.mention} игру на {ccg1} cc\n\n{orauthor.display_name} - <:unverified:768155761171234887>\n{ormember.display_name} - <:unverified:768155761171234887>\n{orauthor.display_name} отказался от игры**', color = 0x425be0)
+                            emb.set_author(name = f'{payload.member.guild.name} | Орёл - Решка', icon_url = payload.member.guild.icon_url)
+                            emb.set_footer(text = f'(Орёл) {orauthor.name} x {ormember.name} (Решка)')
+                            await ormsg.edit(embed = emb)
+                            await ormsg.clear_reactions()
             if content == 'reshka':
                 if payload.member.id == ormember1.id:
                     if payload.message_id == ormsg1.id:
