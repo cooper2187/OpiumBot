@@ -146,7 +146,7 @@ class Other(commands.Cog):
             await channel.set_permissions(member, overwrite = None, reason = f'By {ctx.message.author.display_name}')
             
     @commands.command()
-    async def randname(self, ctx):
+    async def randname(self, ctx, count: int):
         nicknames = [
             "Paula_Cooper", "Rafaella_Cooper", "Alicia_Cooper", "Amelia_Cooper", "Adriana_Cooper", "Manuela_Cooper", "Juliana_Cooper", "Elizabeth_Cooper",
             "Alicia_Cooper", "Maria_Cooper", "Adriana_Cooper", "Fiorella_Cooper", "Mariana_Cooper", "Mia_Cooper", "Paige_Cooper", "Brooke_Cooper", "Evelyn_Cooper", 
@@ -155,10 +155,13 @@ class Other(commands.Cog):
             "Leslie_Cooper", "Riley_Cooper", "Vanessa_Cooper", "Rachel_Cooper", "Ana_Cooper", "Kiara_Cooper", "Isabel_Cooper", "Michelle_Cooper", "Regina_Cooper",
             "Allison_Cooper", "Valentina_Cooper", "Olivia_Cooper", "Nicole_Cooper", "Emilia_Cooper", "Jose_Cooper", "Alessandra_Cooper", "Juana_Cooper", "Alessandra_Cooper"
         ]
-        n = randint(1, (len(nicknames) - 1))
-        n2 = randint(1, (len(nicknames) - 1))
-        n2 = randint(1, (len(nicknames) - 1))
-        await ctx.send(embed = discord.Embed(description = "**1. {nicknames[n]}\n2. {nicknames[n]}\n3. {nicknames[n]}**"))
+        names = []
+        a = 0
+        while a < count:
+            n = randint(1, (len(nicknames) - 1))
+            names.append(nicknames[n])
+            a++
+        await ctx.send(embed = discord.Embed(description = "**\n**".join(names)))
 
 def setup(client):
     client.add_cog(Other(client))
