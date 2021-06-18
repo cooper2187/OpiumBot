@@ -156,7 +156,9 @@ class Other(commands.Cog):
             "Allison_Cooper", "Valentina_Cooper", "Olivia_Cooper", "Nicole_Cooper", "Emilia_Cooper", "Jose_Cooper", "Alessandra_Cooper", "Juana_Cooper", "Alessandra_Cooper"
         ]
         n = randint(1, (len(nicknames) - 1))
-        await ctx.send(embed = discord.Embed(description = nicknames[n]))
+        n2 = randint(1, (len(nicknames) - 1))
+        n2 = randint(1, (len(nicknames) - 1))
+        await ctx.send(embed = discord.Embed(description = "**1. {nicknames[n]}\n2. {nicknames[n]}\n3. {nicknames[n]}**"))
 
 def setup(client):
     client.add_cog(Other(client))
