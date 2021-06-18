@@ -143,6 +143,19 @@ class Other(commands.Cog):
         await ctx.channel.purge(limit = 1)
         for channel in self.client.get_guild(ctx.message.guild.id).channels:
             await channel.set_permissions(member, overwrite = None, reason = f'By {ctx.message.author.display_name}')
+            
+    @commands.command()
+    async def randname(self, ctx):
+        nicknames = [
+            "Paula_Cooper", "Rafaella_Cooper", "Alicia_Cooper", "Amelia_Cooper", "Adriana_Cooper", "Manuela_Cooper", "Juliana_Cooper", "Elizabeth_Cooper",
+            "Alicia_Cooper", "Maria_Cooper", "Adriana_Cooper", "Fiorella_Cooper", "Mariana_Cooper", "Mia_Cooper", "Paige_Cooper", "Brooke_Cooper", "Evelyn_Cooper", 
+            "Gabriella_Cooper", "Sophia_Cooper", "Zoe_Cooper", "Natalie_Cooper", "Grace_Cooper", "Jasmine_Cooper", "Bailey_Cooper", "Leah_Cooper", "Avery_Cooper",
+            "Olivia_Cooper", "Rebecca_Cooper", "Ella_Cooper", "Arianna_Cooper", "Ashley_Cooper", "Brooke_Cooper", "Victoria_Cooper", "Hailey_Cooper", "Mackenzie_Cooper", 
+            "Leslie_Cooper", "Riley_Cooper", "Vanessa_Cooper", "Rachel_Cooper", "Ana_Cooper", "Kiara_Cooper", "Isabel_Cooper", "Michelle_Cooper", "Regina_Cooper",
+            "Allison_Cooper", "Valentina_Cooper", "Olivia_Cooper", "Nicole_Cooper", "Emilia_Cooper", "Jose_Cooper", "Alessandra_Cooper", "Juana_Cooper", "Alessandra_Cooper"
+        ]
+        n = randint(1, (len(nicknames) - 1))
+        await ctx.send(embed = discord.Embed(description = nicknames[n]))
 
 def setup(client):
     client.add_cog(Other(client))
