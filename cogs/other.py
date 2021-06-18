@@ -160,7 +160,7 @@ class Other(commands.Cog):
         while a < count:
             n = randint(1, (len(nicknames) - 1))
             names.append(nicknames[n])
-            a++
+            a += 1
         await ctx.send(embed = discord.Embed(description = "**\n**".join(names)))
 
 def setup(client):
