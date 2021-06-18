@@ -146,7 +146,13 @@ class Other(commands.Cog):
             await channel.set_permissions(member, overwrite = None, reason = f'By {ctx.message.author.display_name}')
             
     @commands.command()
-    async def randname(self, ctx, count: int):
+    async def randname(self, ctx, count: int = None):
+        if count is None:
+            count = 1
+        elif count > 52:
+            count = 53
+        else:
+            count = count
         nicknames = [
             "Paula_Cooper", "Rafaella_Cooper", "Alicia_Cooper", "Amelia_Cooper", "Adriana_Cooper", "Manuela_Cooper", "Juliana_Cooper", "Elizabeth_Cooper",
             "Alicia_Cooper", "Maria_Cooper", "Adriana_Cooper", "Fiorella_Cooper", "Mariana_Cooper", "Mia_Cooper", "Paige_Cooper", "Brooke_Cooper", "Evelyn_Cooper", 
