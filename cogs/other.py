@@ -4,6 +4,7 @@ import os
 import asyncio
 import pymongo
 from pymongo import MongoClient
+from random import randint
 
 class Other(commands.Cog):
 
