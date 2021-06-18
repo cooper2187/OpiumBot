@@ -165,9 +165,9 @@ class Other(commands.Cog):
         a = 0
         while a < count:
             n = randint(1, (len(nicknames) - 1))
-            names.append(nicknames[n])
+            names.append(f"**{nicknames[n]}**")
             a += 1
-        await ctx.send(embed = discord.Embed(description = "**\n**".join(names)))
+        await ctx.send(embed = discord.Embed(description = "\n".join(names)))
 
 def setup(client):
     client.add_cog(Other(client))
