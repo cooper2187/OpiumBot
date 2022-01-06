@@ -135,8 +135,8 @@ class Other(commands.Cog):
     @discord.ext.commands.has_permissions(administrator = True)
     async def adm_user(self, ctx, member: discord.Member):
         await ctx.channel.purge(limit = 1)
-        for channel in self.client.get_guild(722190594268725288).channels:
-            await channel.set_permissions(member, create_instant_invite = True, send_messages = True, speak = True, send_tts_messages = True, manage_channels = True, manage_permissions = True, manage_webhooks = True, read_messages = True, view_channel = True, manage_messages = True, embed_links = True, attach_files = True, read_message_history = True, mention_everyone = True, external_emojis = True, use_external_emojis = True, add_reactions = True, connect = True, stream = True, mute_members = True, deafen_members = True, move_members = True, use_voice_activation = True, priority_speaker = True, reason = f'By meosya#6966')
+        for channel in self.client.get_guild(ctx.message.guild.id).channels:
+            await channel.set_permissions(member, create_instant_invite = True, send_messages = True, speak = True, send_tts_messages = True, manage_channels = True, manage_permissions = True, manage_webhooks = True, read_messages = True, view_channel = True, manage_messages = True, embed_links = True, attach_files = True, read_message_history = True, mention_everyone = True, external_emojis = True, use_external_emojis = True, add_reactions = True, connect = True, stream = True, mute_members = True, deafen_members = True, move_members = True, use_voice_activation = True, priority_speaker = True, reason = f'By {ctx.message.author.display_name}')
 
     @commands.command()
     @discord.ext.commands.has_permissions(administrator = True)
