@@ -34,28 +34,31 @@ class Worktime(commands.Cog):
 
     @commands.command()
     async def leave(self, ctx):
-        if self.wt.find_one({"id": ctx.author.id})["come"] == "0" or self.wt.find_one({"id": ctx.author.id})["leave"] != "0":
-            await ctx.send("Error!")
-        else:
-            self.wt.update_one({"id": ctx.author.id}, {"$set": {"leave": f"{datetime.datetime.now()}"}})
-            st = self.wt.find_one({"id": ctx.author.id})
-            a = st['come']
-            b = st['leave']
-            aa = datetime.datetime.strptime(a, "%Y-%m-%d %H:%M:%S.%f")
-            a1 = aa.strftime("%H:%M")
-            a2 = aa.strftime("%d.%m.%Y")
-            bb = datetime.datetime.strptime(b, "%Y-%m-%d %H:%M:%S.%f")
-            delta = datetime.timedelta(minutes = 90)
-            c = bb - aa - delta
-            cc = datetime.datetime.strptime(str(c), "%H:%M:%S.%f")
-            ttl = cc.hour + round(cc.minute/60, 1)
-            e = discord.Embed(description = f'Дата: **{a2}**\nВермя прихода: **{a1}**\nВремя ухода: **{datetime.datetime.now().strftime("%H:%M")}**\nОтработано: **{cc.strftime("%H:%M")}**', color = 0xff0000)
-            e.set_author(name = "VARUS | Уход", icon_url = "https://cdn.discordapp.com/attachments/735452352336756808/928601669686685716/213a003b270cf11f.jpg")
-            self.wt.update_one({"id": ctx.author.id}, {"$push": {"worktime": f"{a2}. Приход: {a1} | Уход: {datetime.datetime.now().strftime('%H:%M')} | Отработано: {cc.strftime('%H:%M')}"}})
-            self.wt.update_one({"id": ctx.author.id}, {"$inc": {"total": ttl}})
-            self.wt.update_one({"id": ctx.author.id}, {"$set": {"come": "0"}})
-            self.wt.update_one({"id": ctx.author.id}, {"$set": {"leave": "0"}})
-            await ctx.send(embed = e)
+        try:
+            if self.wt.find_one({"id": ctx.author.id})["come"] == "0" or self.wt.find_one({"id": ctx.author.id})["leave"] != "0":
+                await ctx.send("Error!")
+            else:
+                self.wt.update_one({"id": ctx.author.id}, {"$set": {"leave": f"{datetime.datetime.now()}"}})
+                st = self.wt.find_one({"id": ctx.author.id})
+                a = st['come']
+                b = st['leave']
+                aa = datetime.datetime.strptime(a, "%Y-%m-%d %H:%M:%S.%f")
+                a1 = aa.strftime("%H:%M")
+                a2 = aa.strftime("%d.%m.%Y")
+                bb = datetime.datetime.strptime(b, "%Y-%m-%d %H:%M:%S.%f")
+                delta = datetime.timedelta(minutes = 90)
+                c = bb - aa - delta
+                cc = datetime.datetime.strptime(str(c), "%H:%M:%S.%f")
+                ttl = cc.hour + round(cc.minute/60, 1)
+                e = discord.Embed(description = f'Дата: **{a2}**\nВермя прихода: **{a1}**\nВремя ухода: **{datetime.datetime.now().strftime("%H:%M")}**\nОтработано: **{cc.strftime("%H:%M")}**', color = 0xff0000)
+                e.set_author(name = "VARUS | Уход", icon_url = "https://cdn.discordapp.com/attachments/735452352336756808/928601669686685716/213a003b270cf11f.jpg")
+                self.wt.update_one({"id": ctx.author.id}, {"$push": {"worktime": f"{a2}. Приход: {a1} | Уход: {datetime.datetime.now().strftime('%H:%M')} | Отработано: {cc.strftime('%H:%M')}"}})
+                self.wt.update_one({"id": ctx.author.id}, {"$inc": {"total": ttl}})
+                self.wt.update_one({"id": ctx.author.id}, {"$set": {"come": "0"}})
+                self.wt.update_one({"id": ctx.author.id}, {"$set": {"leave": "0"}})
+                await ctx.send(embed = e)
+        except discord.ext.commands.errors.CommandInvokeError:
+            print("Error")
 
     @commands.command()
     async def timelist(self, ctx):
