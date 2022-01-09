@@ -14,19 +14,19 @@ class Worktime(commands.Cog):
 
     @commands.command()
     async def come(self, ctx):
+        info = {
+            "id": ctx.author.id,
+            "name": f"{ctx.author.name}#{ctx.author.discriminator}",
+            "come": 0,
+            "leave": 0,
+            "worktime": [0], 
+            "total": 0
+        }
+        if self.wt.count_documents({"id": ctx.author.id}) == 0:
+            self.wt.insert_one(info)
         if self.wt.find_one({"id": ctx.author.id})["come"] != "0":
             await ctx.send("Error!")
         else:
-            info = {
-                "id": ctx.author.id,
-                "name": f"{ctx.author.name}#{ctx.author.discriminator}",
-                "come": 0,
-                "leave": 0,
-                "worktime": [0], 
-                "total": 0
-            }
-            if self.wt.count_documents({"id": ctx.author.id}) == 0:
-                self.wt.insert_one(info)
             self.wt.update_one({"id": ctx.author.id}, {"$set": {"come": f"{datetime.datetime.now()}"}})
             e = discord.Embed(description = f'Дата: **{datetime.datetime.now().strftime("%d.%m.%Y")}**\nВремя: **{datetime.datetime.now().strftime("%H:%M")}**', color = 0x02ff00)
             e.set_author(name = "VARUS | Приход", icon_url = "https://cdn.discordapp.com/attachments/735452352336756808/928601669686685716/213a003b270cf11f.jpg")
