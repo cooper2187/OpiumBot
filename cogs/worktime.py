@@ -12,7 +12,7 @@ class Worktime(commands.Cog):
         self.cluster = MongoClient("mongodb+srv://andrewnobot:xuInmV8QmD9GRR5c@cluster0.28biu.mongodb.net/opiumdb?retryWrites=true&w=majority")
         self.wt = self.cluster.work.worktime
 
-    @commands.Cog.listener
+    @commands.Cog.listener()
     async def on_raw_reaction_add(self, payload):
         if payload.message_id == 930080312740950037:
             if payload.emoji.name == '➡️':
