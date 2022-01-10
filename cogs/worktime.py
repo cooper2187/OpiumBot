@@ -73,6 +73,17 @@ class Worktime(commands.Cog):
         e.set_author(name = "VARUS | Часы", icon_url = "https://cdn.discordapp.com/attachments/735452352336756808/928601669686685716/213a003b270cf11f.jpg")
         e.set_footer(text = f"\n\nTotal: {ttl} hours", icon_url = ctx.author.avatar_url)
         await ctx.send(embed = e)
+        
+    @commands.command()
+    async def add_emb(self, ctx):
+        await ctx.message.delete()
+        e = discord.Embed(description = "**Приход - ➡️\nУход - ⬅️\nПросмотреть часы за этот месяц - ⏲️**", timestamp = ctx.message.created_at)
+        e.set_author(name = "Varus | Счёчик часов", icon_url = "https://cdn.discordapp.com/attachments/735452352336756808/928601669686685716/213a003b270cf11f.jpg")
+        e.set_footer(text = "Opium Team", icon_url = "https://cdn.discordapp.com/avatars/722921602026700861/654ff8c616269acc148f204c17670aaa.webp?size=1024")
+        msg = await ctx.send(embed = e)
+        await msg.add_reaction("➡️")
+        await msg.add_reaction("⬅️")
+        await msg.add_reaction("⏲️")
 
 def setup(client):
     client.add_cog(Worktime(client))
