@@ -20,8 +20,8 @@ class Worktime(commands.Cog):
                     info = {
                         "id": payload.member.id,
                         "name": f"{payload.member.name}#{payload.member.discriminator}",
-                        "come": 0,
-                        "leave": 0,
+                        "come": "0",
+                        "leave": "0",
                         "worktime": [0], 
                         "total": 0
                     }
