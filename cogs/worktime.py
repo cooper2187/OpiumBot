@@ -12,6 +12,15 @@ class Worktime(commands.Cog):
         self.cluster = MongoClient("mongodb+srv://andrewnobot:xuInmV8QmD9GRR5c@cluster0.28biu.mongodb.net/opiumdb?retryWrites=true&w=majority")
         self.wt = self.cluster.work.worktime
 
+    def rounding(self, a):
+        if (0.5 <= round(a % 1, 1) and round(a % 1, 1) <= 0.9):
+            self.a = int(a) + 0.5
+        elif (0.1 <= round(a % 1, 1) and round(a % 1, 1) <= 0.4):
+            self.a = int(a)
+        else:
+            self.a = a
+        return a
+
     @commands.Cog.listener()
     async def on_raw_reaction_add(self, payload):
         if payload.message_id == 930080312740950037:
@@ -56,7 +65,7 @@ class Worktime(commands.Cog):
                         delta = datetime.timedelta(minutes = 90)
                         c = bb - aa - delta
                         cc = datetime.datetime.strptime(str(c), "%H:%M:%S.%f")
-                        ttl = cc.hour + round(cc.minute/60, 1)
+                        ttl = self.rounding(cc.hour + round(cc.minute/60, 1))
                         e = discord.Embed(description = f'Дата: **{a2}**\nВермя прихода: **{a1}**\nВремя ухода: **{datetime.datetime.now().strftime("%H:%M")}**\nОтработано: **{cc.strftime("%H:%M")}**', color = 0xff0000)
                         e.set_author(name = "VARUS | Уход", icon_url = "https://cdn.discordapp.com/attachments/735452352336756808/928601669686685716/213a003b270cf11f.jpg")
                         self.wt.update_one({"id": payload.member.id}, {"$push": {"worktime": f"{a2}. Приход: {a1} | Уход: {datetime.datetime.now().strftime('%H:%M')} | Отработано: {cc.strftime('%H:%M')}"}})
