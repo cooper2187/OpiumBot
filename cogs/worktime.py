@@ -12,7 +12,7 @@ class Worktime(commands.Cog):
         self.cluster = MongoClient("mongodb+srv://andrewnobot:xuInmV8QmD9GRR5c@cluster0.28biu.mongodb.net/opiumdb?retryWrites=true&w=majority")
         self.wt = self.cluster.work.worktime
 
-    def rounding(a):
+    def rounding(self, a):
         if (0.5 <= round(a % 1, 1) and round(a % 1, 1) <= 0.9):
             a = int(a) + 0.5
         elif (0.1 <= round(a % 1, 1) and round(a % 1, 1) <= 0.4):
