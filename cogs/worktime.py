@@ -65,7 +65,7 @@ class Worktime(commands.Cog):
                         delta = datetime.timedelta(minutes = 90)
                         c = bb - aa - delta
                         cc = datetime.datetime.strptime(str(c), "%H:%M:%S.%f")
-                        ttl = rounding(cc.hour + round(cc.minute/60, 1))
+                        ttl = self.rounding(cc.hour + round(cc.minute/60, 1))
                         e = discord.Embed(description = f'Дата: **{a2}**\nВермя прихода: **{a1}**\nВремя ухода: **{datetime.datetime.now().strftime("%H:%M")}**\nОтработано: **{cc.strftime("%H:%M")}**', color = 0xff0000)
                         e.set_author(name = "VARUS | Уход", icon_url = "https://cdn.discordapp.com/attachments/735452352336756808/928601669686685716/213a003b270cf11f.jpg")
                         self.wt.update_one({"id": payload.member.id}, {"$push": {"worktime": f"{a2}. Приход: {a1} | Уход: {datetime.datetime.now().strftime('%H:%M')} | Отработано: {cc.strftime('%H:%M')}"}})
