@@ -14,11 +14,11 @@ class Worktime(commands.Cog):
 
     def rounding(self, a):
         if (0.5 <= round(a % 1, 1) and round(a % 1, 1) <= 0.9):
-            a = int(a) + 0.5
+            self.a = int(a) + 0.5
         elif (0.1 <= round(a % 1, 1) and round(a % 1, 1) <= 0.4):
-            a = int(a)
+            self.a = int(a)
         else:
-            a = a
+            self.a = a
         return a
 
     @commands.Cog.listener
