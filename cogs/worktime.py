@@ -5,8 +5,6 @@ import datetime
 import pymongo
 from pymongo import MongoClient
 
-from worktime import rounding
-
 class Worktime(commands.Cog):
 
     def __init__(self, client):
