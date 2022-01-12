@@ -67,6 +67,7 @@ class Logs(commands.Cog):
     async def on_message_delete(self, message):
         try:
             logchannel = self.client.get_channel(798248355888496642)
+            logchannel1 = self.client.get_channel(735452393927475261)
             if not message.guild.id == 722190594268725288:
                 return
             elif message.channel == logchannel:
@@ -78,6 +79,7 @@ class Logs(commands.Cog):
                 e = discord.Embed(title = f'{message.guild.name} | Сообщение удалено ✉️❌', description = f'**Отправитель: {message.author.mention}. Канал: {message.channel.mention}\nСообщение:** {message.content}')
                 e.set_footer(text = f'{time}', icon_url = message.author.avatar_url)
                 await logchannel.send(embed = e)
+                await logchannel1.send(embed = e)
         except AttributeError:
             pass
             
