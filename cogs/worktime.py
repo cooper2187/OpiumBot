@@ -26,16 +26,20 @@ class Worktime(commands.Cog):
         if payload.message_id == 930080312740950037:
             if payload.emoji.name == '➡️':
                 try:
+                    nw = datetime.datetime.now()
                     info = {
                         "id": payload.member.id,
                         "name": f"{payload.member.name}#{payload.member.discriminator}",
                         "come": 0,
                         "leave": 0,
-                        "worktime": [0], 
+                        f"worktime{nw.month}": [0], 
                         "total": 0
                     }
                     if self.wt.count_documents({"id": payload.member.id}) == 0:
                         self.wt.insert_one(info)
+                    if nw.day == 1:
+                        self.wt.insert_one({f"worktime{nw.month}": [0]})
+                        self.wt.update_one({"id": payload.member.id}, {"$set": {"total": 0}})
                     if self.wt.find_one({"id": payload.member.id})["come"] != "0":
                         await payload.member.send("Error!")
                     else:
@@ -51,6 +55,7 @@ class Worktime(commands.Cog):
         if payload.message_id == 930080312740950037:
             if payload.emoji.name == '⬅️':
                 try:
+                    nw = datetime.datetime.now()
                     if self.wt.find_one({"id": payload.member.id})["come"] == "0" or self.wt.find_one({"id": payload.member.id})["leave"] != "0":
                         await payload.member.send("Error!")
                     else:
@@ -68,7 +73,7 @@ class Worktime(commands.Cog):
                         ttl = self.rounding(cc.hour + round(cc.minute/60, 1))
                         e = discord.Embed(description = f'Дата: **{a2}**\nВермя прихода: **{a1}**\nВремя ухода: **{datetime.datetime.now().strftime("%H:%M")}**\nОтработано: **{cc.strftime("%H:%M")}**', color = 0xff0000)
                         e.set_author(name = "VARUS | Уход", icon_url = "https://cdn.discordapp.com/attachments/735452352336756808/928601669686685716/213a003b270cf11f.jpg")
-                        self.wt.update_one({"id": payload.member.id}, {"$push": {"worktime": f"{a2}. Приход: {a1} | Уход: {datetime.datetime.now().strftime('%H:%M')} | Отработано: {cc.strftime('%H:%M')}"}})
+                        self.wt.update_one({"id": payload.member.id}, {"$push": {f"worktime{nw.month}": f"{a2}. Приход: {a1} | Уход: {datetime.datetime.now().strftime('%H:%M')} | Отработано: {cc.strftime('%H:%M')}"}})
                         self.wt.update_one({"id": payload.member.id}, {"$inc": {"total": ttl}})
                         self.wt.update_one({"id": payload.member.id}, {"$set": {"come": "0"}})
                         self.wt.update_one({"id": payload.member.id}, {"$set": {"leave": "0"}})
@@ -80,7 +85,8 @@ class Worktime(commands.Cog):
                 await msg.remove_reaction("⬅️", payload.member)
         if payload.message_id == 930080312740950037:
             if payload.emoji.name == '⏲️':
-                wl = self.wt.find_one({"id": payload.member.id})['worktime']
+                nw = datetime.datetime.now()
+                wl = self.wt.find_one({"id": payload.member.id})[f'worktime{nw.month}']
                 ttl = round(self.wt.find_one({"id": payload.member.id})['total'], 1)
                 llist = []
                 i = 1
