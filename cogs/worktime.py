@@ -38,7 +38,7 @@ class Worktime(commands.Cog):
                     if self.wt.count_documents({"id": payload.member.id}) == 0:
                         self.wt.insert_one(info)
                     if nw.day == 1:
-                        self.wt.insert_one({f"worktime{nw.month}": [0]})
+                        self.wt.update_one({"id": payload.member.id}, {"$set": {f"worktime{nw.month}": [0]}})
                         self.wt.update_one({"id": payload.member.id}, {"$set": {"total": 0}})
                     if self.wt.find_one({"id": payload.member.id})["come"] != "0":
                         await payload.member.send("Error!")
