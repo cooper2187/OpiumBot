@@ -100,6 +100,25 @@ class Worktime(commands.Cog):
                 channel = self.client.get_channel(payload.channel_id)
                 msg = await channel.fetch_message(payload.message_id)
                 await msg.remove_reaction("⏲️", payload.member)
+    
+    @commands.command()
+    async def timelist(self, ctx, m = None):
+        nw = datetime.datetime.now()
+        if m is None:
+            m = nw.month
+        else:
+            m = m
+        wl = self.wt.find_one({"id": ctx.author.id})[f'worktime{m}']
+        ttl = round(self.wt.find_one({"id": ctx.author.id})['total'], 1)
+        llist = []
+        i = 1
+        for a in wl:
+            llist.append(f"**🔹  {i}. {a}**")
+            i += 1
+        e = discord.Embed(description = "\n".join(llist), color = 0x0090ff)
+        e.set_author(name = "VARUS | Часы", icon_url = "https://cdn.discordapp.com/attachments/735452352336756808/928601669686685716/213a003b270cf11f.jpg")
+        e.set_footer(text = f"\n\nИтого: {ttl} hours", icon_url = ctx.author.avatar_url)
+        await ctx.author.send(embed = e)
 
 def setup(client):
     client.add_cog(Worktime(client))
