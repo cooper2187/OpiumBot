@@ -52,7 +52,7 @@ class Worktime(commands.Cog):
                             else:
                                 pass
                             return a.strftime("%Y-%m-%d ") + b
-                        entr = entrance(datetime.datetime.now())
+                        entr = entrance(self, datetime.datetime.now())
                         self.wt.update_one({"id": payload.member.id}, {"$set": {"come": entr}})
                         e = discord.Embed(description = f'Дата: **{datetime.datetime.now().strftime("%d.%m.%Y")}**\nВремя: **{datetime.datetime.now().strftime("%H:%M")}**', color = 0x02ff00)
                         e.set_author(name = "VARUS | Вход", icon_url = "https://cdn.discordapp.com/attachments/735452352336756808/928601669686685716/213a003b270cf11f.jpg")
@@ -81,7 +81,7 @@ class Worktime(commands.Cog):
                             else:
                                 pass
                             return a.strftime("%Y-%m-%d ") + b
-                        ext = out(datetime.datetime.now())
+                        ext = out(self, datetime.datetime.now())
                         self.wt.update_one({"id": payload.member.id}, {"$set": {"leave": ext}})
                         st = self.wt.find_one({"id": payload.member.id})
                         a = st['come']
