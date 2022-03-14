@@ -21,32 +21,6 @@ class Worktime(commands.Cog):
     #         a = a
     #     return a
 
-    def entrance(self, a):
-        if a.minute >= 0 and a.minute <= 14:
-            b = f"{a.hour}:15:00.0"
-        elif a.minute >= 15 and a.minute <= 29:
-            b = f"{a.hour}:30:00.0"
-        elif a.minute >= 30 and a.minute <= 44:
-            b = f"{a.hour}:45:00.0"
-        elif a.minute >= 45 and a.minute <= 59:
-            b = f"{a.hour + 1}:00:00.0"
-        else:
-            pass
-        return a.strftime("%Y-%m-%d ") + b
-
-    def out(self, a):
-        if a.minute >= 0 and a.minute <= 14:
-            b = f"{a.hour}:00:00.0"
-        elif a.minute >= 15 and a.minute <= 29:
-            b = f"{a.hour}:15:00.0"
-        elif a.minute >= 30 and a.minute <= 44:
-            b = f"{a.hour}:30:00.0"
-        elif a.minute >= 45 and a.minute <= 59:
-            b = f"{a.hour}:45:00.0"
-        else:
-            pass
-        return a.strftime("%Y-%m-%d ") + b
-
     @commands.Cog.listener()
     async def on_raw_reaction_add(self, payload):
         if payload.message_id == 930080312740950037:
@@ -66,6 +40,18 @@ class Worktime(commands.Cog):
                     if self.wt.find_one({"id": payload.member.id})["come"] != "0":
                         await payload.member.send("Error!")
                     else:
+                        def entrance(self, a):
+                            if a.minute >= 0 and a.minute <= 14:
+                                b = f"{a.hour}:15:00.0"
+                            elif a.minute >= 15 and a.minute <= 29:
+                                b = f"{a.hour}:30:00.0"
+                            elif a.minute >= 30 and a.minute <= 44:
+                                b = f"{a.hour}:45:00.0"
+                            elif a.minute >= 45 and a.minute <= 59:
+                                b = f"{a.hour + 1}:00:00.0"
+                            else:
+                                pass
+                            return a.strftime("%Y-%m-%d ") + b
                         entr = entrance(datetime.datetime.now())
                         self.wt.update_one({"id": payload.member.id}, {"$set": {"come": entr}})
                         e = discord.Embed(description = f'Дата: **{datetime.datetime.now().strftime("%d.%m.%Y")}**\nВремя: **{datetime.datetime.now().strftime("%H:%M")}**', color = 0x02ff00)
@@ -83,6 +69,18 @@ class Worktime(commands.Cog):
                     if self.wt.find_one({"id": payload.member.id})["come"] == "0" or self.wt.find_one({"id": payload.member.id})["leave"] != "0":
                         await payload.member.send("Error!")
                     else:
+                        def out(self, a):
+                            if a.minute >= 0 and a.minute <= 14:
+                                b = f"{a.hour}:00:00.0"
+                            elif a.minute >= 15 and a.minute <= 29:
+                                b = f"{a.hour}:15:00.0"
+                            elif a.minute >= 30 and a.minute <= 44:
+                                b = f"{a.hour}:30:00.0"
+                            elif a.minute >= 45 and a.minute <= 59:
+                                b = f"{a.hour}:45:00.0"
+                            else:
+                                pass
+                            return a.strftime("%Y-%m-%d ") + b
                         ext = out(datetime.datetime.now())
                         self.wt.update_one({"id": payload.member.id}, {"$set": {"leave": ext}})
                         st = self.wt.find_one({"id": payload.member.id})
