@@ -54,7 +54,9 @@ class Worktime(commands.Cog):
                             return a.strftime("%Y-%m-%d ") + b
                         entr = entrance(self, datetime.datetime.now())
                         self.wt.update_one({"id": payload.member.id}, {"$set": {"come": entr}})
-                        e = discord.Embed(description = f'Дата: **{datetime.datetime.now().strftime("%d.%m.%Y")}**\nВремя: **{datetime.datetime.now().strftime("%H:%M")}**', color = 0x02ff00)
+                        aa = datetime.datetime.strptime(entr, "%Y-%m-%d %H:%M:%S.%f")
+                        a1 = aa.strftime("%H:%M")
+                        e = discord.Embed(description = f'Дата: **{datetime.datetime.now().strftime("%d.%m.%Y")}**\nВремя: **{a1}**', color = 0x02ff00)
                         e.set_author(name = "VARUS | Вход", icon_url = "https://cdn.discordapp.com/attachments/735452352336756808/928601669686685716/213a003b270cf11f.jpg")
                         await payload.member.send(embed = e)
                 except discord.ext.commands.errors.CommandInvokeError:
@@ -96,7 +98,7 @@ class Worktime(commands.Cog):
                         c = bb - aa - delta
                         cc = datetime.datetime.strptime(str(c), "%H:%M:%S")
                         ttl = cc.hour + round(cc.minute/60, 2)
-                        e = discord.Embed(description = f'Дата: **{b2}**\nВремя: **{datetime.datetime.now().strftime("%H:%M")}**\nОтработано: **{cc.strftime("%H:%M")}**', color = 0xff0000)
+                        e = discord.Embed(description = f'Дата: **{b2}**\nВремя: **{b1}**\nОтработано: **{cc.strftime("%H:%M")}**', color = 0xff0000)
                         e.set_author(name = "VARUS | Выход", icon_url = "https://cdn.discordapp.com/attachments/735452352336756808/928601669686685716/213a003b270cf11f.jpg")
                         self.wt.update_one({"id": payload.member.id}, {"$push": {f"worktime{nw.month}": f"{a2}. Вход: {a1} | Выход: {b1} | Отработано: {cc.strftime('%H:%M')}"}})
                         self.wt.update_one({"id": payload.member.id}, {"$inc": {f"total{nw.month}": ttl}})
