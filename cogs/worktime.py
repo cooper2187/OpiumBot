@@ -12,14 +12,40 @@ class Worktime(commands.Cog):
         self.cluster = MongoClient("mongodb+srv://andrewnobot:xuInmV8QmD9GRR5c@cluster0.28biu.mongodb.net/opiumdb?retryWrites=true&w=majority")
         self.wt = self.cluster.work.worktime
 
-    def rounding(self, a):
-        if (0.5 <= round(a % 1, 1) and round(a % 1, 1) <= 0.9):
-            a = int(a) + 0.5
-        elif (0.1 <= round(a % 1, 1) and round(a % 1, 1) <= 0.4):
-            a = int(a)
+    # def rounding(self, a):
+    #     if (0.5 <= round(a % 1, 1) and round(a % 1, 1) <= 0.9):
+    #         a = int(a) + 0.5
+    #     elif (0.1 <= round(a % 1, 1) and round(a % 1, 1) <= 0.4):
+    #         a = int(a)
+    #     else:
+    #         a = a
+    #     return a
+
+    def entrance(self, a):
+        if a.minute >= 0 and a.minute <= 14:
+            b = f"{a.hour}:15:00.0"
+        elif a.minute >= 15 and a.minute <= 29:
+            b = f"{a.hour}:30:00.0"
+        elif a.minute >= 30 and a.minute <= 44:
+            b = f"{a.hour}:45:00.0"
+        elif a.minute >= 45 and a.minute <= 59:
+            b = f"{a.hour + 1}:00:00.0"
         else:
-            a = a
-        return a
+            pass
+        return a.strftime("%Y-%m-%d ") + b
+
+    def out(self, a):
+        if a.minute >= 0 and a.minute <= 14:
+            b = f"{a.hour}:00:00.0"
+        elif a.minute >= 15 and a.minute <= 29:
+            b = f"{a.hour}:15:00.0"
+        elif a.minute >= 30 and a.minute <= 44:
+            b = f"{a.hour}:30:00.0"
+        elif a.minute >= 45 and a.minute <= 59:
+            b = f"{a.hour}:45:00.0"
+        else:
+            pass
+        return a.strftime("%Y-%m-%d ") + b
 
     @commands.Cog.listener()
     async def on_raw_reaction_add(self, payload):
@@ -40,7 +66,8 @@ class Worktime(commands.Cog):
                     if self.wt.find_one({"id": payload.member.id})["come"] != "0":
                         await payload.member.send("Error!")
                     else:
-                        self.wt.update_one({"id": payload.member.id}, {"$set": {"come": f"{datetime.datetime.now()}"}})
+                        entr = entrance(datetime.datetime.now())
+                        self.wt.update_one({"id": payload.member.id}, {"$set": {"come": entr}})
                         e = discord.Embed(description = f'Дата: **{datetime.datetime.now().strftime("%d.%m.%Y")}**\nВремя: **{datetime.datetime.now().strftime("%H:%M")}**', color = 0x02ff00)
                         e.set_author(name = "VARUS | Вход", icon_url = "https://cdn.discordapp.com/attachments/735452352336756808/928601669686685716/213a003b270cf11f.jpg")
                         await payload.member.send(embed = e)
@@ -56,7 +83,8 @@ class Worktime(commands.Cog):
                     if self.wt.find_one({"id": payload.member.id})["come"] == "0" or self.wt.find_one({"id": payload.member.id})["leave"] != "0":
                         await payload.member.send("Error!")
                     else:
-                        self.wt.update_one({"id": payload.member.id}, {"$set": {"leave": f"{datetime.datetime.now()}"}})
+                        ext = out(datetime.datetime.now())
+                        self.wt.update_one({"id": payload.member.id}, {"$set": {"leave": ext}})
                         st = self.wt.find_one({"id": payload.member.id})
                         a = st['come']
                         b = st['leave']
@@ -65,10 +93,10 @@ class Worktime(commands.Cog):
                         a2 = aa.strftime("%d.%m.%Y")
                         bb = datetime.datetime.strptime(b, "%Y-%m-%d %H:%M:%S.%f")
                         b2 = bb.strftime("%d.%m.%Y")
-                        delta = datetime.timedelta(minutes = 60)
+                        delta = datetime.timedelta(minutes = 90)
                         c = bb - aa - delta
                         cc = datetime.datetime.strptime(str(c), "%H:%M:%S.%f")
-                        ttl = self.rounding(cc.hour + round(cc.minute/60, 1))
+                        ttl = cc.hour + round(cc.minute/60, 2)
                         e = discord.Embed(description = f'Дата: **{b2}**\nВремя: **{datetime.datetime.now().strftime("%H:%M")}**\nОтработано: **{cc.strftime("%H:%M")}**', color = 0xff0000)
                         e.set_author(name = "VARUS | Выход", icon_url = "https://cdn.discordapp.com/attachments/735452352336756808/928601669686685716/213a003b270cf11f.jpg")
                         self.wt.update_one({"id": payload.member.id}, {"$push": {f"worktime{nw.month}": f"{a2}. Вход: {a1} | Выход: {datetime.datetime.now().strftime('%H:%M')} | Отработано: {cc.strftime('%H:%M')}"}})
