@@ -56,8 +56,12 @@ class Worktime(commands.Cog):
                         self.wt.update_one({"id": payload.member.id}, {"$set": {"come": entr}})
                         aa = datetime.datetime.strptime(entr, "%Y-%m-%d %H:%M:%S.%f")
                         a1 = aa.strftime("%H:%M")
+                        delta = datetime.timedelta(minutes = 750)
+                        c = aa + delta
+                        cc = datetime.datetime.strptime(str(c), "%H:%M:%S")
                         e = discord.Embed(description = f'Дата: **{datetime.datetime.now().strftime("%d.%m.%Y")}**\nВремя: **{a1}**', color = 0x02ff00)
                         e.set_author(name = "VARUS | Вход", icon_url = "https://cdn.discordapp.com/attachments/735452352336756808/928601669686685716/213a003b270cf11f.jpg")
+                        e.set_footer(text = f"Рекомендуемое время ухода: {cc.strftime('%H:%M')}")
                         await payload.member.send(embed = e)
                 except discord.ext.commands.errors.CommandInvokeError:
                     print("Error")
@@ -98,8 +102,9 @@ class Worktime(commands.Cog):
                         c = bb - aa - delta
                         cc = datetime.datetime.strptime(str(c), "%H:%M:%S")
                         ttl = cc.hour + round(cc.minute/60, 2)
-                        e = discord.Embed(description = f'Дата: **{b2}**\nВремя: **{b1}**\nОтработано: **{cc.strftime("%H:%M")}**', color = 0xff0000)
+                        e = discord.Embed(description = f'Дата: **{b2}**\nВремя: **{b1}**', color = 0xff0000)
                         e.set_author(name = "VARUS | Выход", icon_url = "https://cdn.discordapp.com/attachments/735452352336756808/928601669686685716/213a003b270cf11f.jpg")
+                        e.set_footer(text = f'Отработано: {cc.strftime("%H:%M")}')
                         self.wt.update_one({"id": payload.member.id}, {"$push": {f"worktime{nw.month}": f"{a2}. Вход: {a1} | Выход: {b1} | Отработано: {cc.strftime('%H:%M')}"}})
                         self.wt.update_one({"id": payload.member.id}, {"$inc": {f"total{nw.month}": ttl}})
                         self.wt.update_one({"id": payload.member.id}, {"$set": {"come": "0"}})
