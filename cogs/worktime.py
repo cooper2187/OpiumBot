@@ -93,7 +93,7 @@ class Worktime(commands.Cog):
                         b2 = bb.strftime("%d.%m.%Y")
                         delta = datetime.timedelta(minutes = 90)
                         c = bb - aa - delta
-                        cc = datetime.datetime.strptime(str(c), "%H:%M:%S.%f")
+                        cc = datetime.datetime.strptime(str(c), "%H:%M:%S")
                         ttl = cc.hour + round(cc.minute/60, 2)
                         e = discord.Embed(description = f'Дата: **{b2}**\nВремя: **{datetime.datetime.now().strftime("%H:%M")}**\nОтработано: **{cc.strftime("%H:%M")}**', color = 0xff0000)
                         e.set_author(name = "VARUS | Выход", icon_url = "https://cdn.discordapp.com/attachments/735452352336756808/928601669686685716/213a003b270cf11f.jpg")
