@@ -90,6 +90,7 @@ class Worktime(commands.Cog):
                         a1 = aa.strftime("%H:%M")
                         a2 = aa.strftime("%d.%m.%Y")
                         bb = datetime.datetime.strptime(b, "%Y-%m-%d %H:%M:%S.%f")
+                        b1 = bb.strftime("%H:%M")
                         b2 = bb.strftime("%d.%m.%Y")
                         delta = datetime.timedelta(minutes = 90)
                         c = bb - aa - delta
@@ -97,7 +98,7 @@ class Worktime(commands.Cog):
                         ttl = cc.hour + round(cc.minute/60, 2)
                         e = discord.Embed(description = f'Дата: **{b2}**\nВремя: **{datetime.datetime.now().strftime("%H:%M")}**\nОтработано: **{cc.strftime("%H:%M")}**', color = 0xff0000)
                         e.set_author(name = "VARUS | Выход", icon_url = "https://cdn.discordapp.com/attachments/735452352336756808/928601669686685716/213a003b270cf11f.jpg")
-                        self.wt.update_one({"id": payload.member.id}, {"$push": {f"worktime{nw.month}": f"{a2}. Вход: {a1} | Выход: {datetime.datetime.now().strftime('%H:%M')} | Отработано: {cc.strftime('%H:%M')}"}})
+                        self.wt.update_one({"id": payload.member.id}, {"$push": {f"worktime{nw.month}": f"{a2}. Вход: {a1} | Выход: {b1} | Отработано: {cc.strftime('%H:%M')}"}})
                         self.wt.update_one({"id": payload.member.id}, {"$inc": {f"total{nw.month}": ttl}})
                         self.wt.update_one({"id": payload.member.id}, {"$set": {"come": "0"}})
                         self.wt.update_one({"id": payload.member.id}, {"$set": {"leave": "0"}})
@@ -111,7 +112,7 @@ class Worktime(commands.Cog):
             if payload.emoji.name == '⏲️':
                 nw = datetime.datetime.now()
                 wl = self.wt.find_one({"id": payload.member.id})[f'worktime{nw.month}']
-                ttl = round(self.wt.find_one({"id": payload.member.id})[f'total{nw.month}'], 1)
+                ttl = round(self.wt.find_one({"id": payload.member.id})[f'total{nw.month}'], 2)
                 llist = []
                 i = 1
                 for a in wl:
